@@ -277,7 +277,7 @@
   }
 }
 
-.flyingCoin{opacity:.8}}
+.flyingCoin{opacity:.8}
 
 .balanceGroup{display:flex;align-items:center;gap:6px}.coinBalance{min-width:68px;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:5px;align-items:center;padding:6px 8px}.coinBalance small{grid-column:2;color:#737889;font-size:8px;font-weight:700;line-height:1}.tokenIcon{width:22px;height:22px;object-fit:contain;grid-row:1 / span 2}.coinBalance strong,.coinBalance span{font-size:12px;line-height:1}.guideSteps{display:grid;gap:9px;margin:16px 0 18px;text-align:left}.guideStep{display:flex;align-items:center;gap:10px;padding:10px 11px;border:1px solid #e4e6ee;border-radius:12px;background:linear-gradient(135deg,#fafaff,#f4f5fb)}.guideIcon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border-radius:10px;background:#eeecff;color:#6658d9;font-size:14px;font-weight:900}.guideStep div{min-width:0}.guideStep strong,.guideStep div span{display:block}.guideStep strong{color:#202332;font-size:11px}.guideStep div span{margin-top:2px;color:#737889;font-size:10px;line-height:1.35}.modalIntro{margin:0 auto 16px;max-width:300px}
 @media(max-width:480px){.balanceGroup{gap:4px}.coinBalance{min-width:58px;padding:5px 6px}.coinBalance small{font-size:7px}.tokenIcon{width:20px;height:20px}.guideStep{padding:9px}.guideIcon{width:34px;height:34px;flex-basis:34px}}
