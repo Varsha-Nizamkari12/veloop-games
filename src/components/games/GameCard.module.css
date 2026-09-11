@@ -1,0 +1,251 @@
+.card {
+  background: #0d0f1c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  height: 100%;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Supplied artwork stays image-based; the promotional footer is cropped so the coded UI can render the reward state separately. */
+
+.imageWrapper {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #080a14;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Card content */
+
+.content {
+  padding: 16px;
+  text-align: center;
+}
+
+.title {
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+/* Token requirement */
+
+.tokenCost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.tokenIcon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* Play Now button */
+
+.button {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 16px;
+  background: linear-gradient(
+    135deg,
+    #6d5dfc,
+    #8b7cff
+  );
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 6px 18px rgba(109, 93, 252, 0.3);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+/* Infinite premium shimmer */
+
+.button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 35%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0.15) 65%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+  animation: shimmer 2.8s infinite;
+  z-index: 1;
+}
+
+.button span {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -120%;
+  }
+
+  45% {
+    left: 130%;
+  }
+
+  100% {
+    left: 130%;
+  }
+}
+
+/* Insufficient token state */
+
+.button:disabled,
+.insufficient {
+  background: #707487;
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.button:disabled::after,
+.insufficient::after {
+  animation: none;
+}
+
+.button:disabled:hover,
+.insufficient:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Keyboard focus */
+
+.button:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* Mobile tap feedback */
+
+@media (hover: none) {
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .button:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .button:active {
+    transform: scale(0.96);
+  }
+}
+
+.balanceText {
+  margin: 7px 0 0;
+  color: #aeb2c3;
+  font-size: 0.75rem;
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .button::after {
+    animation: none;
+  }
+
+  .card,
+  .button {
+    transition: none;
+  }
+
+  .card:hover,
+  .button:hover,
+  .button:active {
+    transform: none;
+  }
+}
+
+/* Tablet / mobile */
+
+@media (max-width: 768px) {
+  .content {
+    padding: 14px;
+  }
+
+  .imageWrapper {
+    aspect-ratio: 4 / 5;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: 12px;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .tokenCost {
+    font-size: 0.82rem;
+  }
+
+  .tokenIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .button {
+    padding: 10px 12px;
+  }
+}

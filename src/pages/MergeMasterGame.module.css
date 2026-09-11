@@ -1,0 +1,283 @@
+.page{min-height:100vh;background:#f5f6fa;color:#1a1d2b;padding:18px 18px 105px;box-sizing:border-box}.header{width:min(560px,100%);margin:0 auto 14px;display:grid;grid-template-columns:42px 1fr auto;align-items:center}.backButton{width:42px;height:42px;border:1px solid #e0e3eb;border-radius:12px;background:#fff;color:#242735;font-size:1.25rem;cursor:pointer;box-shadow:0 5px 16px rgba(25,30,45,.08)}.backButton:hover{transform:translateY(-1px);box-shadow:0 7px 20px rgba(25,30,45,.12)}.titleBlock{text-align:center}.eyebrow{display:block;color:#737889;font-size:.58rem;font-weight:800;letter-spacing:.15em}.titleBlock h1{margin:3px 0 0;color:#171a27;font-size:1.3rem;font-weight:850}.coinBalance{min-width:72px;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 10px;border:1px solid #e0e3eb;border-radius:12px;background:#fff;color:#202332;box-shadow:0 5px 16px rgba(25,30,45,.08)}.coinIcon{width:25px;height:25px;object-fit:contain;border-radius:50%}.hud{width:min(360px,100%);margin:0 auto 12px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.hudCard{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border:1px solid #e0e3eb;border-radius:13px;background:#fff;box-shadow:0 5px 16px rgba(25,30,45,.08)}.hudCard span{color:#737889;font-size:.62rem;font-weight:800;letter-spacing:.08em}.hudCard strong{color:#202332;font-size:.85rem}.gameSection{width:min(420px,100%);margin:0 auto;padding:18px;border-radius:22px;background:#fff;border:1px solid #e0e3eb;box-shadow:0 18px 45px rgba(25,30,45,.12)}.board{width:min(360px,100%);aspect-ratio:1;margin:0 auto;padding:9px;display:grid;grid-template-columns:repeat(4,1fr);gap:9px;border-radius:16px;background:#dfe2e9;touch-action:none;user-select:none}.cell{display:flex;justify-content:center;align-items:center;aspect-ratio:1;border-radius:10px;background:#eceef3;color:#7b7f8d;font-size:clamp(1rem,5vw,1.65rem);font-weight:800;transition:transform .15s ease,background .15s ease}.cell[data-value="2"]{background:#eeeef2;color:#555a68}.cell[data-value="4"]{background:#e3e2eb;color:#555a68}.cell[data-value="8"]{background:#d8d4e7;color:#4e4860}.cell[data-value="16"]{background:#cec6e3;color:#4b445c}.cell[data-value="32"]{background:#c2b5df;color:#40394f}.cell[data-value="64"]{background:#b5a5da;color:#fff}.cell[data-value="128"]{background:#a291d0;color:#fff}.cell[data-value="256"]{background:#9380c5;color:#fff}.cell[data-value="512"]{background:#8170bb;color:#fff}.cell[data-value="1024"],.cell[data-value="2048"]{background:#6658d9;color:#fff;box-shadow:0 7px 18px rgba(102,88,217,.28)}.controls{margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:8px}.controls button{width:48px;height:42px;border:1px solid #e0e3eb;border-radius:10px;background:#f8f9fb;color:#343847;font-size:1.15rem;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(25,30,45,.08)}.controls button:hover{background:#f0f1f5}.horizontalControls{display:flex;gap:8px}.instruction{width:min(420px,100%);margin:14px auto 10px;color:#737889;text-align:center;font-size:.8rem}.guideButton{display:block;margin:8px auto 8px;padding:9px 18px;border:1px solid #d7d3f4;border-radius:999px;background:#faf9ff;color:#6658d9;font-weight:700;cursor:pointer}.guideButton:hover{background:#f2f0ff}.stopButton{display:block;margin:0 auto;padding:9px 18px;border:1px solid #e0e3eb;border-radius:10px;background:#fff;color:#626879;font-weight:700;cursor:pointer}.stopButton:hover{background:#f8f8fc}.overlay{position:fixed;inset:0;z-index:100;display:flex;justify-content:center;align-items:center;padding:20px;background:rgba(20,23,35,.58);backdrop-filter:blur(8px)}.modal{width:min(320px,100%);padding:25px;border:1px solid #e0e3eb;border-radius:19px;background:#fff;box-shadow:0 24px 70px rgba(20,23,35,.2);text-align:center}.modalLabel{display:block;margin-bottom:5px;color:#6658d9;font-size:.62rem;font-weight:800;letter-spacing:.14em}.modal h2{margin:5px 0 10px;color:#171a27;font-size:1.65rem}.modal p{margin:8px 0;color:#626879;font-size:.88rem;line-height:1.5}.modal ul{margin:15px 0;padding-left:20px;text-align:left;color:#626879;font-size:.83rem;line-height:1.7}.primaryButton,.secondaryButton{width:100%;padding:12px 16px;border-radius:10px;font-weight:750;cursor:pointer}.primaryButton{margin-top:10px;border:0;background:linear-gradient(135deg,#6658d9,#877cf0);color:#fff}.secondaryButton{margin-top:9px;background:#f7f8fb;color:#343847;border:1px solid #e0e3eb}.closeButton{position:absolute;top:12px;right:12px;width:30px;height:30px;border:0;border-radius:50%;background:#f1f2f6;color:#626879;font-size:20px;cursor:pointer}.finalScore{display:block;margin:3px 0 10px;color:#171a27;font-size:2rem}.rewardCelebration{position:relative;display:flex;justify-content:center;min-height:48px}.reward{display:flex;align-items:center;justify-content:center;gap:7px;color:#6658d9!important;font-weight:850!important;animation:rewardPop .55s ease both}.reward .coinIcon{width:30px;height:30px;animation:coinBounce .8s ease .15s both}.rewardParticle{position:absolute;color:#8a7df0;font-size:14px;animation:particleBurst .8s ease both}.rewardParticle:nth-child(1){transform:translate(-55px,8px);animation-delay:.05s}.rewardParticle:nth-child(2){transform:translate(0,-8px);animation-delay:.12s}.rewardParticle:nth-child(3){transform:translate(55px,8px);animation-delay:.19s}.bottomNav{position:fixed;z-index:30;left:0;bottom:0;width:100%;height:72px;display:flex;align-items:center;justify-content:center;gap:90px;padding:10px 20px;background:rgba(255,255,255,.96);border-top:1px solid #e1e3e9;backdrop-filter:blur(12px)}.navItem{display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:transparent;color:#737889;font-size:.75rem;font-weight:650;cursor:pointer}.navItem span:first-child{font-size:1.25rem}.navItem:hover{color:#6658d9}@keyframes rewardPop{0%{opacity:0;transform:translateY(8px) scale(.82)}70%{transform:translateY(-2px) scale(1.05)}100%{opacity:1;transform:none}}@keyframes coinBounce{0%{transform:scale(.5) rotate(-12deg)}60%{transform:scale(1.16) rotate(4deg)}100%{transform:scale(1) rotate(0)}}@keyframes particleBurst{0%{opacity:0;transform:translateY(8px) scale(.4)}45%{opacity:1}100%{opacity:0;transform:translateY(-18px) scale(1)}}@media(max-width:480px){.page{padding:12px 12px 100px}.titleBlock h1{font-size:1.15rem}.coinBalance{min-width:58px;padding:7px 8px}.hud{gap:8px}.hudCard{padding:10px}.hudCard strong{font-size:.78rem}.gameSection{padding:12px}.board{padding:7px;gap:7px}.cell{border-radius:8px}.bottomNav{gap:65px}}@media(prefers-reduced-motion:reduce){.backButton,.guideButton,.stopButton{transition:none}.cell{transition:none}.reward,.reward .coinIcon,.rewardParticle{animation:none}.rewardParticle{opacity:.7}}
+
+.coinFlight{position:absolute;left:50%;top:50%;width:28px;height:28px;object-fit:contain;z-index:5;pointer-events:none;animation:coinFlight .65s cubic-bezier(.22,.8,.25,1) both}@keyframes coinFlight{0%{opacity:0;transform:translate(-50%,-50%) scale(.55) rotate(-8deg)}12%{opacity:1}70%{opacity:1;transform:translate(110%,-155px) scale(.92) rotate(16deg)}100%{opacity:0;transform:translate(150%,-205px) scale(.65) rotate(28deg)}}@media(prefers-reduced-motion:reduce){.coinFlight{animation:none;opacity:.9;transform:translate(0,-20px)}}
+
+.modal{position:relative}.closeButton{position:absolute;top:12px;right:12px;width:32px;height:32px;display:grid;place-items:center;border:1px solid #e0e3eb;border-radius:50%;background:#f7f8fb;color:#4f5464;font-size:20px;line-height:1;cursor:pointer}.closeButton:hover{background:#eef0f5}.modalIntro{margin:0 auto 16px;max-width:300px}.guideSteps{display:grid;gap:9px;margin:16px 0 18px;text-align:left}.guideStep{display:flex;align-items:center;gap:10px;padding:10px 11px;border:1px solid #e4e6ee;border-radius:12px;background:linear-gradient(135deg,#fafaff,#f4f5fb)}.guideIcon{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:9px;background:#eeecff;color:#6658d9;font-size:11px;font-weight:900}.guideStep div{min-width:0}.guideStep strong,.guideStep div span{display:block}.guideStep strong{color:#202332;font-size:11px}.guideStep div span{margin-top:2px;color:#737889;font-size:10px;line-height:1.35}@media(max-width:480px){.guideStep{padding:9px}.guideIcon{width:34px;height:34px;flex-basis:34px}}
+
+
+.coinFlightGroup{position:absolute;left:50%;top:50%;width:1px;height:1px;z-index:6;pointer-events:none}.coinFlightGroup .coinFlight{position:absolute;left:0;top:0;width:28px;height:28px;object-fit:contain;pointer-events:none;animation:coinFlightPremium .72s cubic-bezier(.18,.82,.25,1) var(--coin-delay,0ms) both}.coinFlightGroup .coinFlight:nth-child(1){--coin-x:-120px;--coin-y:-190px;--coin-xm:-74px;--coin-ym:-118px}.coinFlightGroup .coinFlight:nth-child(2){--coin-x:-75px;--coin-y:-230px;--coin-xm:-47px;--coin-ym:-143px}.coinFlightGroup .coinFlight:nth-child(3){--coin-x:-28px;--coin-y:-245px;--coin-xm:-17px;--coin-ym:-152px}.coinFlightGroup .coinFlight:nth-child(4){--coin-x:22px;--coin-y:-242px;--coin-xm:14px;--coin-ym:-150px}.coinFlightGroup .coinFlight:nth-child(5){--coin-x:70px;--coin-y:-220px;--coin-xm:43px;--coin-ym:-136px}.coinFlightGroup .coinFlight:nth-child(6){--coin-x:112px;--coin-y:-185px;--coin-xm:69px;--coin-ym:-115px}@keyframes coinFlightPremium{0%{opacity:0;transform:translate(-50%,-50%) scale(.35) rotate(var(--coin-angle,0deg))}12%{opacity:1}55%{opacity:1;transform:translate(calc(-50% + var(--coin-xm)),calc(-50% + var(--coin-ym))) scale(1) rotate(calc(var(--coin-angle,0deg) + 12deg))}100%{opacity:0;transform:translate(calc(-50% + var(--coin-x)),calc(-50% + var(--coin-y))) scale(.7) rotate(calc(var(--coin-angle,0deg) + 30deg))}}@media(prefers-reduced-motion:reduce){.coinFlightGroup .coinFlight{animation:none;opacity:.9;transform:translate(-50%,-120px)}}
+
+
+/* Premium reward journey: trophy -> flying coins -> balance summary */
+.rewardFlow{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:310px;justify-content:center}
+.trophyWrap{position:relative;width:138px;height:118px;display:grid;place-items:center;margin:0 auto 4px}
+.trophy{position:relative;z-index:2;font-size:78px;line-height:1;filter:drop-shadow(0 12px 18px rgba(245,174,32,.32));animation:trophyEntrance .85s cubic-bezier(.2,.85,.25,1) both}
+.trophyGlow{position:absolute;z-index:1;font-size:112px;color:#ffd76a;opacity:.22;filter:blur(5px);animation:trophyGlow 1.2s ease-in-out infinite alternate}
+.trophySpark{position:absolute;z-index:3;top:8px;right:7px;color:#f6c84b;font-size:20px;animation:sparkle .9s ease-in-out infinite alternate}
+.rewardKicker{margin-top:2px;color:#6658d9;font-size:11px;font-weight:900;letter-spacing:.17em}
+.rewardTitle{margin:7px 0 6px;color:#171a27;font-size:25px;font-weight:900}
+.rewardAmount{display:flex;align-items:center;justify-content:center;gap:8px;color:#6658d9;font-size:27px;font-weight:950;letter-spacing:-.02em}
+.rewardCoinLarge{width:39px;height:39px;object-fit:contain;filter:drop-shadow(0 5px 8px rgba(245,174,32,.28))}
+.rewardMessage{max-width:270px;margin:9px auto 0!important;color:#737889!important;font-size:12px!important;line-height:1.5!important}
+
+/* =========================================================
+   PREMIUM GAME COIN FLIGHT
+   Burst from reward cup -> curve upward -> balance
+   ========================================================= */
+
+.coinFlightScene {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+  margin: 0 auto 3px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 50% 78%, rgba(255, 204, 70, .22), transparent 30%),
+    linear-gradient(145deg, #faf9ff, #f1f3fb);
+  border: 1px solid #e5e6ef;
+}
+
+.coinSource {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  z-index: 2;
+
+  width: 72px;
+  height: 72px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  background: #fff;
+
+  box-shadow:
+    0 12px 28px rgba(102, 88, 217, .16),
+    0 0 0 8px rgba(255, 205, 70, .08);
+
+  transform: translateX(-50%);
+}
+
+.coinSource img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 5px 7px rgba(245, 174, 32, .3));
+
+  animation: rewardCoinPulse .75s ease-in-out infinite alternate;
+}
+
+.coinTarget {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  z-index: 4;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 7px 11px;
+
+  border: 1px solid #dedfe8;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, .96);
+
+  box-shadow: 0 8px 20px rgba(25, 30, 45, .12);
+
+  color: #202332;
+  font-size: 12px;
+  font-weight: 800;
+
+  animation: targetPulse 1.7s ease-out both;
+}
+
+.coinTarget img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+/* Individual flying coins */
+.flyingCoin {
+  position: absolute;
+  left: 50%;
+  bottom: 42px;
+
+  width: 30px;
+  height: 30px;
+
+  z-index: 3;
+
+  object-fit: contain;
+  pointer-events: none;
+
+  opacity: 0;
+
+  animation:
+    premiumCoinFlight
+    1.65s
+    cubic-bezier(.18, .78, .22, 1)
+    var(--delay)
+    both;
+
+  filter:
+    drop-shadow(0 4px 7px rgba(245, 174, 32, .42))
+    drop-shadow(0 0 8px rgba(255, 205, 70, .28));
+}
+
+/* Different starting positions make the burst look natural */
+.flyingCoin:nth-of-type(2) { --burst-x: -115px; --burst-y: -75px; }
+.flyingCoin:nth-of-type(3) { --burst-x: -88px;  --burst-y: -110px; }
+.flyingCoin:nth-of-type(4) { --burst-x: -55px;  --burst-y: -135px; }
+.flyingCoin:nth-of-type(5) { --burst-x: -20px;  --burst-y: -150px; }
+.flyingCoin:nth-of-type(6) { --burst-x: 20px;   --burst-y: -150px; }
+.flyingCoin:nth-of-type(7) { --burst-x: 55px;   --burst-y: -135px; }
+.flyingCoin:nth-of-type(8) { --burst-x: 88px;   --burst-y: -110px; }
+.flyingCoin:nth-of-type(9) { --burst-x: 115px;  --burst-y: -75px; }
+.flyingCoin:nth-of-type(10) { --burst-x: -105px; --burst-y: -35px; }
+.flyingCoin:nth-of-type(11) { --burst-x: -65px;  --burst-y: -65px; }
+.flyingCoin:nth-of-type(12) { --burst-x: 65px;   --burst-y: -65px; }
+.flyingCoin:nth-of-type(13) { --burst-x: 105px;  --burst-y: -35px; }
+.flyingCoin:nth-of-type(14) { --burst-x: -35px;  --burst-y: -95px; }
+.flyingCoin:nth-of-type(15) { --burst-x: 35px;   --burst-y: -95px; }
+
+@keyframes premiumCoinFlight {
+
+  /* Start inside the reward source */
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(-50%, 0)
+      scale(.25)
+      rotate(-20deg);
+  }
+
+  /* Coins appear */
+  8% {
+    opacity: 1;
+  }
+
+  /* BIG BURST */
+  30% {
+    opacity: 1;
+
+    transform:
+      translate(
+        calc(-50% + var(--burst-x)),
+        var(--burst-y)
+      )
+      scale(1.08)
+      rotate(180deg);
+  }
+
+  /* Curve upward */
+  52% {
+    opacity: 1;
+
+    transform:
+      translate(
+        calc(-20px + var(--burst-x) * .65),
+        -145px
+      )
+      scale(.95)
+      rotate(360deg);
+  }
+
+  /* Curve toward balance */
+  72% {
+    opacity: 1;
+
+    transform:
+      translate(
+        calc(75px + var(--burst-x) * .35),
+        -165px
+      )
+      scale(.75)
+      rotate(540deg);
+  }
+
+  /* Enter the balance pill */
+  92% {
+    opacity: 1;
+
+    transform:
+      translate(
+        calc(145px + var(--burst-x) * .12),
+        -178px
+      )
+      scale(.42)
+      rotate(700deg);
+  }
+
+  /* Disappear into balance */
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        calc(165px + var(--burst-x) * .08),
+        -178px
+      )
+      scale(.08)
+      rotate(820deg);
+  }
+}
+
+@keyframes rewardCoinPulse {
+  from {
+    transform: scale(.94);
+  }
+
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes targetPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  78% {
+    transform: scale(1);
+  }
+
+  86% {
+    transform: scale(1.12);
+  }
+
+  94% {
+    transform: scale(.96);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Respect accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+
+  .coinSource img,
+  .flyingCoin,
+  .coinTarget {
+    animation: none;
+  }
+
+  .flyingCoin {
+    opacity: .8;
+    transform: translateY(-100px);
+  }
+}
+
+.flyingCoin{opacity:.8}}
+
+.balanceGroup{display:flex;align-items:center;gap:6px}.coinBalance{min-width:68px;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:5px;align-items:center;padding:6px 8px}.coinBalance small{grid-column:2;color:#737889;font-size:8px;font-weight:700;line-height:1}.tokenIcon{width:22px;height:22px;object-fit:contain;grid-row:1 / span 2}.coinBalance strong,.coinBalance span{font-size:12px;line-height:1}.guideSteps{display:grid;gap:9px;margin:16px 0 18px;text-align:left}.guideStep{display:flex;align-items:center;gap:10px;padding:10px 11px;border:1px solid #e4e6ee;border-radius:12px;background:linear-gradient(135deg,#fafaff,#f4f5fb)}.guideIcon{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border-radius:10px;background:#eeecff;color:#6658d9;font-size:14px;font-weight:900}.guideStep div{min-width:0}.guideStep strong,.guideStep div span{display:block}.guideStep strong{color:#202332;font-size:11px}.guideStep div span{margin-top:2px;color:#737889;font-size:10px;line-height:1.35}.modalIntro{margin:0 auto 16px;max-width:300px}
+@media(max-width:480px){.balanceGroup{gap:4px}.coinBalance{min-width:58px;padding:5px 6px}.coinBalance small{font-size:7px}.tokenIcon{width:20px;height:20px}.guideStep{padding:9px}.guideIcon{width:34px;height:34px;flex-basis:34px}}
