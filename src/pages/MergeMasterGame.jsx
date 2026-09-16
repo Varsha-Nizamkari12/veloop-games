@@ -9,6 +9,7 @@ import styles from "./MergeMasterGame.module.css";
 
 const SIZE = 4;
 const GUIDE_STORAGE_KEY = "veloop_merge_master_guide_seen";
+const BEST_SCORE_STORAGE_KEY = "veloop_merge_master_best_score";
 const MINIMUM_SWIPE_DISTANCE = 35;
 
 function emptyBoard() {
@@ -193,6 +194,11 @@ function MergeMasterGame() {
   const [score, setScore] =
     useState(0);
 
+  const [bestScore, setBestScore] =
+    useState(() => Number(localStorage.getItem(BEST_SCORE_STORAGE_KEY) || 0));
+
+  const [history, setHistory] = useState([]);
+
   const [result, setResult] =
     useState(null);
 
@@ -286,6 +292,14 @@ function MergeMasterGame() {
       const nextScore =
         score + moved.score;
 
+      setHistory((current) => [
+        ...current.slice(-4),
+        {
+          board: board.map((row) => [...row]),
+          score,
+        },
+      ]);
+
       setBoard(nextBoard);
       setScore(nextScore);
 
@@ -365,6 +379,13 @@ function MergeMasterGame() {
     showStopModal,
   ]);
 
+  useEffect(() => {
+    if (score > bestScore) {
+      setBestScore(score);
+      localStorage.setItem(BEST_SCORE_STORAGE_KEY, String(score));
+    }
+  }, [score, bestScore]);
+
   useEffect(() => () => window.clearTimeout(rewardTimerRef.current), []);
 
   const startGuide = () => {
@@ -374,6 +395,28 @@ function MergeMasterGame() {
     );
 
     setShowGuide(false);
+  };
+
+  const undoMove = () => {
+    if (result || showGuide || showStopModal || showHowToPlay || history.length === 0) {
+      return;
+    }
+
+    const previous = history[history.length - 1];
+    setHistory((current) => current.slice(0, -1));
+    setBoard(previous.board);
+    setScore(previous.score);
+  };
+
+  const newGame = () => {
+    setBoard(createBoard());
+    setScore(0);
+    setHistory([]);
+    setResult(null);
+    setReward(0);
+    setRewardStage(null);
+    setReviveUsed(false);
+    rewardCollected.current = false;
   };
 
   const revive = () => {
@@ -551,9 +594,9 @@ function MergeMasterGame() {
         <div
           className={styles.hudCard}
         >
-          <span>TARGET</span>
+          <span>BEST</span>
 
-          <strong>2048</strong>
+          <strong>{bestScore}</strong>
         </div>
       </section>
 
@@ -581,7 +624,7 @@ function MergeMasterGame() {
                   columnIndex
                 ) => (
                   <div
-                    key={`${rowIndex}-${columnIndex}`}
+                    key={`${rowIndex}-${columnIndex}-${value}`}
                     className={styles.cell}
                     data-value={value}
                   >
@@ -591,6 +634,29 @@ function MergeMasterGame() {
               )
           )}
         </div>
+
+        {/* GAME ACTIONS */}
+        {!result && !showGuide && (
+          <div className={styles.actionRow} aria-label="Game actions">
+            <button
+              type="button"
+              className={styles.actionButton}
+              onClick={undoMove}
+              disabled={history.length === 0}
+              aria-label="Undo last move"
+            >
+              ↶ <span>Undo</span>
+            </button>
+            <button
+              type="button"
+              className={styles.actionButton}
+              onClick={newGame}
+              aria-label="Start a new game"
+            >
+              ↻ <span>New Game</span>
+            </button>
+          </div>
+        )}
 
         {/* CONTROLS */}
 
@@ -947,17 +1013,13 @@ function MergeMasterGame() {
                       <div className={styles.coinSource}>
                         <img src={gameCoinImage} alt="" />
                       </div>
-                      {Array.from({ length: 14 }).map((_, index) => (
+                      {Array.from({ length: 9 }).map((_, index) => (
                         <img
                           key={`merge-flight-${index}`}
                           src={gameCoinImage}
                           alt=""
                           className={styles.flyingCoin}
-                          style={{
-                            "--i": index,
-                            "--dx": `${(index - 6.5) * 22}px`,
-                            "--delay": `${index * 65}ms`
-                          }}
+                          style={{ "--i": index, "--dx": `${(index - 4) * 24}px`, "--delay": `${index * 70}ms` }}
                         />
                       ))}
                       <div className={styles.coinTarget}>
