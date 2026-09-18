@@ -16,11 +16,53 @@ const PADDLE_HEIGHT = 12;
 
 const BALL_SIZE = 10;
 const INITIAL_BALL_SPEED = 310;
-const MAX_BALL_SPEED = 430;
+const MAX_BALL_SPEED = 540;
 const FRAME_TIME_CAP = 0.032;
 
-const BLOCK_ROWS = 5;
 const BLOCK_COLUMNS = 6;
+const MAX_LEVEL = 10;
+
+const LEVEL_CONFIG = {
+  1: { rows: 4, speed: 310, label: "Warm Up" },
+  2: { rows: 5, speed: 332, label: "Getting Started" },
+  3: { rows: 5, speed: 354, label: "Quick Hands" },
+  4: { rows: 6, speed: 378, label: "Pressure" },
+  5: { rows: 6, speed: 402, label: "Arcade Rush" },
+  6: { rows: 7, speed: 426, label: "High Speed" },
+  7: { rows: 7, speed: 450, label: "Reflex Test" },
+  8: { rows: 8, speed: 474, label: "Expert" },
+  9: { rows: 8, speed: 500, label: "Master" },
+  10: { rows: 8, speed: 525, label: "Final Rush" },
+};
+
+function getLevelConfig(level) {
+  return LEVEL_CONFIG[Math.min(level, MAX_LEVEL)] || LEVEL_CONFIG[MAX_LEVEL];
+}
+
+function createBlocks(level = 1) {
+  const blocks = [];
+  const { rows } = getLevelConfig(level);
+
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < BLOCK_COLUMNS; column += 1) {
+      const isEdgePattern = level >= 3 && row % 2 === 1 && (column === 0 || column === BLOCK_COLUMNS - 1);
+      const isCenterPattern = level >= 5 && row % 3 === 2 && (column === 2 || column === 3);
+
+      // Keep every level readable while changing the silhouette as difficulty rises.
+      const active = !(isEdgePattern && level % 2 === 1) && !(isCenterPattern && level >= 7);
+
+      blocks.push({
+        x: 12 + column * (BLOCK_WIDTH + BLOCK_GAP),
+        y: 50 + row * (BLOCK_HEIGHT + BLOCK_GAP),
+        width: BLOCK_WIDTH,
+        height: BLOCK_HEIGHT,
+        active,
+      });
+    }
+  }
+
+  return blocks;
+}
 
 const BLOCK_WIDTH = 48;
 const BLOCK_HEIGHT = 20;
@@ -31,35 +73,11 @@ const INITIAL_LIVES = 3;
 const GUIDE_STORAGE_KEY =
   "veloop_block_crush_guide_seen";
 
-function createBlocks() {
-  const blocks = [];
-
-  for (let row = 0; row < BLOCK_ROWS; row += 1) {
-    for (
-      let column = 0;
-      column < BLOCK_COLUMNS;
-      column += 1
-    ) {
-      blocks.push({
-        x:
-          12 +
-          column * (BLOCK_WIDTH + BLOCK_GAP),
-
-        y:
-          50 +
-          row * (BLOCK_HEIGHT + BLOCK_GAP),
-
-        width: BLOCK_WIDTH,
-        height: BLOCK_HEIGHT,
-        active: true,
-      });
-    }
-  }
-
-  return blocks;
-}
-
 function createInitialGameState() {
+  const level = 1;
+  const levelConfig = getLevelConfig(level);
+  const initialBlocks = createBlocks(level);
+
   return {
     paddleX:
       (CANVAS_WIDTH - PADDLE_WIDTH) / 2,
@@ -73,10 +91,10 @@ function createInitialGameState() {
 
     ballSpeedX:
       Math.random() > 0.5
-        ? INITIAL_BALL_SPEED
-        : -INITIAL_BALL_SPEED,
+        ? levelConfig.speed
+        : -levelConfig.speed,
 
-    ballSpeedY: -INITIAL_BALL_SPEED,
+    ballSpeedY: -levelConfig.speed,
 
     trail: [],
     particles: [],
@@ -84,7 +102,11 @@ function createInitialGameState() {
     hitFlash: 0,
     lastFrameTime: 0,
 
-    blocks: createBlocks(),
+    blocks: initialBlocks,
+    totalBlocks: initialBlocks.filter((block) => block.active).length,
+
+    level,
+    levelComplete: false,
 
     score: 0,
 
@@ -115,6 +137,11 @@ function BlockCrushGame() {
   );
 
   const [score, setScore] = useState(0);
+
+  const [level, setLevel] = useState(1);
+
+  const [levelTransition, setLevelTransition] = useState(false);
+  const [levelBanner, setLevelBanner] = useState(null);
 
   const [lives, setLives] =
     useState(INITIAL_LIVES);
@@ -173,16 +200,79 @@ function BlockCrushGame() {
     game.ballY =
       CANVAS_HEIGHT - 70;
 
+    const levelSpeed = getLevelConfig(game.level).speed;
+
     game.ballSpeedX =
       Math.random() > 0.5
-        ? INITIAL_BALL_SPEED
-        : -INITIAL_BALL_SPEED;
+        ? levelSpeed
+        : -levelSpeed;
 
     game.ballSpeedY =
-      -INITIAL_BALL_SPEED;
+      -levelSpeed;
 
     game.lastFrameTime = 0;
     game.trail = [];
+  };
+
+  const completeLevel = () => {
+    const game = gameStateRef.current;
+
+    if (game.gameOver || game.levelComplete) {
+      return;
+    }
+
+    const completedLevel = game.level;
+    const nextLevel = Math.min(completedLevel + 1, MAX_LEVEL);
+
+    game.levelComplete = true;
+    game.paused = true;
+    game.lastFrameTime = 0;
+
+    setLevelBanner({
+      completedLevel,
+      nextLevel,
+      maxed: completedLevel >= MAX_LEVEL,
+      label: getLevelConfig(completedLevel).label,
+    });
+    setLevelTransition(true);
+
+    if (animationRef.current !== null) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+
+    window.setTimeout(() => {
+      const current = gameStateRef.current;
+
+      if (current.gameOver) {
+        return;
+      }
+
+      if (completedLevel >= MAX_LEVEL) {
+        current.levelComplete = false;
+        current.paused = false;
+        setLevelTransition(false);
+        setLevelBanner(null);
+        finishGame();
+        return;
+      }
+
+      current.level = nextLevel;
+      current.levelComplete = false;
+      current.paused = false;
+      current.blocks = createBlocks(nextLevel);
+      current.totalBlocks = current.blocks.filter((block) => block.active).length;
+      current.combo = 0;
+      current.particles = [];
+      current.trail = [];
+      current.lastFrameTime = 0;
+
+      setLevel(nextLevel);
+      setLevelTransition(false);
+      setLevelBanner(null);
+
+      animationRef.current = requestAnimationFrame(gameLoop);
+    }, 1300);
   };
 
   const finishGame = () => {
@@ -775,6 +865,21 @@ function BlockCrushGame() {
       CANVAS_HEIGHT
     );
 
+    /* Level badge inside the arena */
+    ctx.save();
+    ctx.fillStyle = "rgba(255,255,255,.07)";
+    ctx.beginPath();
+    ctx.roundRect(12, 12, 112, 25, 12);
+    ctx.fill();
+    ctx.fillStyle = "rgba(255,255,255,.92)";
+    ctx.font = "800 11px system-ui, sans-serif";
+    ctx.textBaseline = "middle";
+    ctx.fillText(`LEVEL ${game.level}`, 24, 24.5);
+    ctx.fillStyle = "rgba(255,255,255,.48)";
+    ctx.font = "700 9px system-ui, sans-serif";
+    ctx.fillText(getLevelConfig(game.level).label.toUpperCase(), 74, 24.5);
+    ctx.restore();
+
     /* Blocks */
     game.blocks.forEach(
       (block, index) => {
@@ -794,12 +899,15 @@ function BlockCrushGame() {
           ["#73a7ff", "#4b6ee8"],
           ["#57c6ee", "#3d84d9"],
           ["#5dd6b1", "#2c9c83"],
+          ["#ffd45e", "#d9952d"],
+          ["#ff9f7a", "#d96a52"],
+          ["#c49cff", "#7b59d6"],
         ];
 
         const [
           top,
           bottom,
-        ] = palette[row];
+        ] = palette[row % palette.length];
 
         const gradient =
           ctx.createLinearGradient(
@@ -864,15 +972,14 @@ function BlockCrushGame() {
     );
 
     /* Progress rail */
-    const destroyed =
-      game.blocks.filter(
-        (block) =>
-          !block.active
-      ).length;
+    const totalBlocks = game.totalBlocks || game.blocks.length;
+    const activeBlocks = game.blocks.filter((block) => block.active).length;
+    const destroyed = Math.max(0, totalBlocks - activeBlocks);
 
     const progress =
-      destroyed /
-      game.blocks.length;
+      totalBlocks > 0
+        ? destroyed / totalBlocks
+        : 0;
 
     ctx.fillStyle =
       "rgba(255,255,255,.09)";
@@ -1232,7 +1339,7 @@ function BlockCrushGame() {
         Math.min(
           MAX_BALL_SPEED,
           Math.max(
-            INITIAL_BALL_SPEED,
+            getLevelConfig(game.level).speed,
             currentSpeed + 8
           )
         );
@@ -1405,17 +1512,11 @@ function BlockCrushGame() {
           dt
       );
 
-    /* Win */
-    const remainingBlocks =
-      game.blocks.some(
-        (block) =>
-          block.active
-      );
+    /* Level complete */
+    const remainingBlocks = game.blocks.some((block) => block.active);
 
-    if (
-      !remainingBlocks
-    ) {
-      finishGame();
+    if (!remainingBlocks) {
+      completeLevel();
       return;
     }
 
@@ -1698,36 +1799,19 @@ function BlockCrushGame() {
           styles.hud
         }
       >
-        <div
-          className={
-            styles.hudCard
-          }
-        >
-          <span>
-            SCORE
-          </span>
-
-          <strong>
-            {score}
-          </strong>
+        <div className={styles.hudCard}>
+          <span>SCORE</span>
+          <strong>{score}</strong>
         </div>
 
-        <div
-          className={
-            styles.hudCard
-          }
-        >
-          <span>
-            LIVES
-          </span>
+        <div className={styles.hudCard}>
+          <span>LEVEL</span>
+          <strong>{level} / {MAX_LEVEL}</strong>
+        </div>
 
-          <strong>
-            {Math.max(
-              0,
-              lives
-            )}{" "}
-            / 3 ❤️
-          </strong>
+        <div className={styles.hudCard}>
+          <span>LIVES</span>
+          <strong>{Math.max(0, lives)} / 3 ❤️</strong>
         </div>
       </section>
 
@@ -1759,6 +1843,27 @@ function BlockCrushGame() {
           }
           aria-label="Block Crush gameplay"
         />
+
+        {levelTransition && levelBanner && (
+          <div className={styles.overlay}>
+            <div className={`${styles.modal} ${styles.levelUpModal}`} role="status" aria-live="assertive">
+              <span className={styles.levelUpIcon}>✦</span>
+              <span className={styles.modalLabel}>LEVEL COMPLETE</span>
+              <h2>Level {levelBanner.completedLevel} Cleared!</h2>
+              <p>
+                {levelBanner.maxed
+                  ? "You cleared the final level. Great run!"
+                  : `${levelBanner.label} complete. Get ready for Level ${levelBanner.nextLevel}.`}
+              </p>
+              <div className={styles.levelProgress}>
+                <span style={{ width: `${Math.min(100, (levelBanner.completedLevel / MAX_LEVEL) * 100)}%` }} />
+              </div>
+              <strong className={styles.nextLevelText}>
+                {levelBanner.maxed ? "RUN COMPLETE" : `NEXT: LEVEL ${levelBanner.nextLevel}`}
+              </strong>
+            </div>
+          </div>
+        )}
 
         {/* FIRST-TIME GUIDE */}
 
@@ -1793,9 +1898,9 @@ function BlockCrushGame() {
                   styles.modalIntro
                 }
               >
-                Keep the ball in play,
-                break the blocks, and
-                beat your high score.
+                Clear each level, survive
+                the faster pace, and build
+                your high score.
               </p>
 
               <div
@@ -1990,8 +2095,8 @@ function BlockCrushGame() {
                 </li>
 
                 <li>
-                  Clear every block
-                  to win.
+                  Clear the board to
+                  advance to the next level.
                 </li>
               </ul>
 

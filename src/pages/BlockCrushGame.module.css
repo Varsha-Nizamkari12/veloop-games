@@ -105,7 +105,7 @@
 .hud {
   width: min(360px, 100%);
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-bottom: 12px;
 }
@@ -1472,6 +1472,115 @@
   }
 }
 
+.levelUpModal {
+  overflow: hidden;
+  text-align: center;
+}
+
+.levelUpModal::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  left: 50%;
+  top: 48px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,112,255,.18), rgba(124,112,255,0) 68%);
+  pointer-events: none;
+  animation: levelGlow 1.2s ease-in-out infinite alternate;
+}
+
+.levelUpIcon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 12px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #fff5c4, #ffd45e);
+  color: #73551a;
+  font-size: 30px;
+  box-shadow: 0 12px 30px rgba(255, 196, 64, .28);
+  animation: levelIconIn .7s cubic-bezier(.2,.85,.25,1.2) both;
+}
+
+.levelUpModal .modalLabel,
+.levelUpModal h2,
+.levelUpModal p,
+.levelUpModal .levelProgress,
+.levelUpModal .nextLevelText {
+  position: relative;
+  z-index: 1;
+}
+
+.levelUpModal h2 {
+  animation: levelTextIn .55s ease .08s both;
+}
+
+.levelUpModal p {
+  animation: levelTextIn .55s ease .15s both;
+}
+
+.levelProgress {
+  width: min(300px, 100%);
+  height: 8px;
+  margin: 20px auto 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #eceef5;
+}
+
+.levelProgress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #6256e8, #9a8cff);
+  transform-origin: left center;
+  animation: levelProgressIn .95s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.nextLevelText {
+  display: block;
+  color: #6256e8;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  animation: levelTextIn .55s ease .22s both;
+}
+
+@keyframes levelGlow {
+  from { opacity: .55; transform: translateX(-50%) scale(.9); }
+  to { opacity: 1; transform: translateX(-50%) scale(1.08); }
+}
+
+@keyframes levelIconIn {
+  from { opacity: 0; transform: translateY(14px) scale(.65) rotate(-10deg); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes levelTextIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes levelProgressIn {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .levelUpModal::before,
+  .levelUpIcon,
+  .levelUpModal h2,
+  .levelUpModal p,
+  .levelProgress span,
+  .nextLevelText {
+    animation: none;
+  }
+}
+
 /* =========================
    RESPONSIVE
    ========================= */
@@ -1510,7 +1619,8 @@
   }
 
   .hud {
-    gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
   }
 
   .hudCard {

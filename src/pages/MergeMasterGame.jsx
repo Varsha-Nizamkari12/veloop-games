@@ -11,6 +11,24 @@ const SIZE = 4;
 const GUIDE_STORAGE_KEY = "veloop_merge_master_guide_seen";
 const BEST_SCORE_STORAGE_KEY = "veloop_merge_master_best_score";
 const MINIMUM_SWIPE_DISTANCE = 35;
+const LEVELS = [
+  { level: 1, target: 64, title: "Warm Up", accent: "Learn the flow" },
+  { level: 2, target: 128, title: "Getting Started", accent: "Build bigger merges" },
+  { level: 3, target: 256, title: "Momentum", accent: "Plan your space" },
+  { level: 4, target: 512, title: "Pressure", accent: "Protect open lanes" },
+  { level: 5, target: 1024, title: "Arcade Rush", accent: "Think ahead" },
+  { level: 6, target: 2048, title: "Master", accent: "Reach the classic goal" },
+  { level: 7, target: 4096, title: "Expert", accent: "The board gets tougher" },
+  { level: 8, target: 8192, title: "Final Challenge", accent: "Can you go further?" },
+];
+
+function getLevelConfig(level) {
+  return LEVELS[Math.min(level, LEVELS.length) - 1];
+}
+
+function getNextLevelTarget(level) {
+  return getLevelConfig(level).target;
+}
 
 function emptyBoard() {
   return Array.from(
@@ -19,7 +37,7 @@ function emptyBoard() {
   );
 }
 
-function addRandomTile(board) {
+function addRandomTile(board, level = 1) {
   const empty = [];
 
   board.forEach((row, rowIndex) => {
@@ -39,17 +57,18 @@ function addRandomTile(board) {
 
   const nextBoard = board.map((row) => [...row]);
 
+  const fourChance = Math.min(0.22, 0.1 + (level - 1) * 0.018);
   nextBoard[row][column] =
-    Math.random() < 0.9 ? 2 : 4;
+    Math.random() < 1 - fourChance ? 2 : 4;
 
   return nextBoard;
 }
 
-function createBoard() {
+function createBoard(level = 1) {
   let board = emptyBoard();
 
-  board = addRandomTile(board);
-  board = addRandomTile(board);
+  board = addRandomTile(board, level);
+  board = addRandomTile(board, level);
 
   return board;
 }
@@ -173,10 +192,8 @@ function hasValidMoves(board) {
   return false;
 }
 
-function hasWon(board) {
-  return board.some((row) =>
-    row.includes(2048)
-  );
+function hasReachedTarget(board, target) {
+  return board.some((row) => row.some((value) => value >= target));
 }
 
 function MergeMasterGame() {
@@ -188,8 +205,10 @@ function MergeMasterGame() {
     addGameCoins,
   } = useGame();
 
+  const [level, setLevel] = useState(1);
+
   const [board, setBoard] =
-    useState(createBoard);
+    useState(() => createBoard(1));
 
   const [score, setScore] =
     useState(0);
@@ -216,6 +235,8 @@ function MergeMasterGame() {
     useState(false);
 
   const [rewardStage, setRewardStage] = useState(null);
+  const [levelTransition, setLevelTransition] = useState(null);
+  const levelTimerRef = useRef(null);
   const rewardTimerRef = useRef(null);
 
   const [showHowToPlay, setShowHowToPlay] =
@@ -253,7 +274,8 @@ function MergeMasterGame() {
         result ||
         showGuide ||
         showStopModal ||
-        showHowToPlay
+        showHowToPlay ||
+        levelTransition
       ) {
         return;
       }
@@ -286,7 +308,8 @@ function MergeMasterGame() {
 
       const nextBoard =
         addRandomTile(
-          moved.board
+          moved.board,
+          level
         );
 
       const nextScore =
@@ -303,11 +326,31 @@ function MergeMasterGame() {
       setBoard(nextBoard);
       setScore(nextScore);
 
-      if (hasWon(nextBoard)) {
-        finishGame(
-          "win",
-          nextScore
-        );
+      const target = getNextLevelTarget(level);
+
+      if (hasReachedTarget(nextBoard, target)) {
+        if (level >= LEVELS.length) {
+          finishGame("win", nextScore);
+          return;
+        }
+
+        const nextLevel = level + 1;
+        const nextConfig = getLevelConfig(nextLevel);
+
+        setLevelTransition({
+          completedLevel: level,
+          nextLevel,
+          target,
+          nextTarget: nextConfig.target,
+          title: nextConfig.title,
+        });
+
+        levelTimerRef.current = window.setTimeout(() => {
+          setLevel(nextLevel);
+          setBoard(createBoard(nextLevel));
+          setHistory([]);
+          setLevelTransition(null);
+        }, 1250);
 
         return;
       }
@@ -322,6 +365,7 @@ function MergeMasterGame() {
     [
       board,
       finishGame,
+      level,
       result,
       score,
       showGuide,
@@ -386,7 +430,10 @@ function MergeMasterGame() {
     }
   }, [score, bestScore]);
 
-  useEffect(() => () => window.clearTimeout(rewardTimerRef.current), []);
+  useEffect(() => () => {
+    window.clearTimeout(rewardTimerRef.current);
+    window.clearTimeout(levelTimerRef.current);
+  }, []);
 
   const startGuide = () => {
     localStorage.setItem(
@@ -409,12 +456,14 @@ function MergeMasterGame() {
   };
 
   const newGame = () => {
-    setBoard(createBoard());
+    setLevel(1);
+    setBoard(createBoard(1));
     setScore(0);
     setHistory([]);
     setResult(null);
     setReward(0);
     setRewardStage(null);
+    setLevelTransition(null);
     setReviveUsed(false);
     rewardCollected.current = false;
   };
@@ -431,7 +480,7 @@ function MergeMasterGame() {
     setResult(null);
 
     setBoard((currentBoard) =>
-      addRandomTile(currentBoard)
+      addRandomTile(currentBoard, level)
     );
   };
 
@@ -582,6 +631,20 @@ function MergeMasterGame() {
 
       {/* HUD */}
 
+      <section className={styles.levelBanner} aria-label={`Level ${level}`}>
+        <div className={styles.levelHeading}>
+          <div>
+            <span className={styles.levelKicker}>LEVEL {level}</span>
+            <strong>{getLevelConfig(level).title}</strong>
+          </div>
+          <span className={styles.levelTarget}>Target {getLevelConfig(level).target}</span>
+        </div>
+        <div className={styles.levelProgressTrack} aria-hidden="true">
+          <span style={{ width: `${Math.min(100, Math.round((Math.max(...board.flat()) / getLevelConfig(level).target) * 100))}%` }} />
+        </div>
+        <p>{getLevelConfig(level).accent}</p>
+      </section>
+
       <section className={styles.hud}>
         <div
           className={styles.hudCard}
@@ -601,6 +664,19 @@ function MergeMasterGame() {
       </section>
 
       {/* GAME */}
+
+      {levelTransition && (
+        <div className={styles.levelTransition} aria-live="polite">
+          <div className={styles.levelTransitionCard}>
+            <span className={styles.levelTransitionKicker}>LEVEL COMPLETE</span>
+            <div className={styles.levelBadge}>✓</div>
+            <h2>Level {levelTransition.completedLevel} Cleared!</h2>
+            <p>Great merge. Get ready for Level {levelTransition.nextLevel}.</p>
+            <div className={styles.nextLevelPill}>LEVEL {levelTransition.nextLevel} · TARGET {levelTransition.nextTarget}</div>
+            <div className={styles.transitionDots} aria-hidden="true"><span /><span /><span /></div>
+          </div>
+        </div>
+      )}
 
       <section
         className={styles.gameSection}
@@ -780,7 +856,7 @@ function MergeMasterGame() {
               <div className={styles.guideStep}><span className={styles.guideIcon}>↔</span><div><strong>Swipe to move</strong><span>Swipe the board or use the arrow keys.</span></div></div>
               <div className={styles.guideStep}><span className={styles.guideIcon}>2→4</span><div><strong>Merge matching tiles</strong><span>Equal numbers combine into one larger tile.</span></div></div>
               <div className={styles.guideStep}><span className={styles.guideIcon}>↗</span><div><strong>Build your score</strong><span>Every merge adds to your score.</span></div></div>
-              <div className={styles.guideStep}><span className={styles.guideIcon}>2048</span><div><strong>Reach 2048 to win</strong><span>Create the 2048 tile before the board fills.</span></div></div>
+              <div className={styles.guideStep}><span className={styles.guideIcon}>↑</span><div><strong>Clear each level</strong><span>Reach the target tile shown above the board to advance.</span></div></div>
             </div>
 
             <button
@@ -851,7 +927,7 @@ function MergeMasterGame() {
               </div>
               <div className={styles.guideStep}>
                 <span className={styles.guideIcon} aria-hidden="true">🏆</span>
-                <div><strong>Reach 2048</strong><span>Create the 2048 tile to win.</span></div>
+                <div><strong>Progress through levels</strong><span>Targets grow from 64 all the way to 8192.</span></div>
               </div>
             </div>
 
@@ -950,8 +1026,7 @@ function MergeMasterGame() {
                 </h2>
 
                 <p>
-                  You reached the 2048
-                  tile.
+                  You completed the final Merge Master challenge.
                 </p>
               </>
             ) : (

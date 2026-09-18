@@ -64,3 +64,30 @@
 .cell:not([data-value="0"]){animation:tileEnter .18s cubic-bezier(.2,.85,.25,1) both}
 @keyframes tileEnter{0%{opacity:.45;transform:scale(.72)}65%{transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
 .gameSection{background:linear-gradient(145deg,#fff,#f8f8fc);box-shadow:0 24px 55px rgba(25,30,55,.14)}
+
+/* Progressive level system */
+.levelBanner{width:min(420px,100%);margin:0 auto 12px;padding:12px 14px;border:1px solid #e1e2ee;border-radius:16px;background:linear-gradient(145deg,#ffffff,#f7f6ff);box-shadow:0 9px 24px rgba(35,30,70,.09)}
+.levelHeading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.levelHeading>div{display:flex;align-items:baseline;gap:8px;min-width:0}
+.levelKicker{color:#6658d9;font-size:.63rem;font-weight:950;letter-spacing:.12em;white-space:nowrap}
+.levelHeading strong{color:#202332;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.levelTarget{padding:5px 8px;border-radius:999px;background:#eeecff;color:#6658d9;font-size:.62rem;font-weight:850;white-space:nowrap}
+.levelProgressTrack{height:5px;margin-top:10px;border-radius:999px;background:#e9e9f1;overflow:hidden}
+.levelProgressTrack span{display:block;height:100%;min-width:8%;border-radius:inherit;background:linear-gradient(90deg,#6658d9,#8d7df0);transition:width .35s ease}
+.levelBanner p{margin:7px 0 0;color:#737889;font-size:.67rem;font-weight:650}
+.levelTransition{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:20px;background:rgba(19,17,31,.58);backdrop-filter:blur(7px);animation:levelOverlayIn .25s ease both}
+.levelTransitionCard{width:min(350px,100%);padding:28px 24px 24px;border:1px solid rgba(255,255,255,.7);border-radius:24px;background:linear-gradient(145deg,#fff,#f5f3ff);box-shadow:0 28px 80px rgba(18,15,40,.3);text-align:center;animation:levelCardIn .55s cubic-bezier(.2,.85,.25,1) both}
+.levelTransitionKicker{color:#6658d9;font-size:.63rem;font-weight:950;letter-spacing:.18em}
+.levelBadge{width:62px;height:62px;margin:13px auto 10px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#6658d9,#9182f5);color:#fff;font-size:29px;font-weight:950;box-shadow:0 12px 30px rgba(102,88,217,.28);animation:levelBadgePop .7s cubic-bezier(.2,.9,.25,1) both}
+.levelTransitionCard h2{margin:0;color:#171a27;font-size:1.35rem;font-weight:950}
+.levelTransitionCard p{margin:8px auto 15px;color:#737889;font-size:.78rem;line-height:1.5}
+.nextLevelPill{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border:1px solid #dedaf8;border-radius:999px;background:#faf9ff;color:#5549b9;font-size:.66rem;font-weight:900;letter-spacing:.05em}
+.transitionDots{display:flex;justify-content:center;gap:6px;margin-top:18px}
+.transitionDots span{width:6px;height:6px;border-radius:50%;background:#8d7df0;animation:transitionDot .8s ease-in-out infinite}
+.transitionDots span:nth-child(2){animation-delay:.12s}.transitionDots span:nth-child(3){animation-delay:.24s}
+@keyframes levelOverlayIn{from{opacity:0}to{opacity:1}}
+@keyframes levelCardIn{from{opacity:0;transform:translateY(22px) scale(.92)}65%{transform:translateY(-3px) scale(1.02)}to{opacity:1;transform:none}}
+@keyframes levelBadgePop{0%{transform:scale(.35) rotate(-12deg);opacity:0}70%{transform:scale(1.12) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes transitionDot{0%,100%{transform:translateY(0);opacity:.45}50%{transform:translateY(-4px);opacity:1}}
+@media(max-width:480px){.levelBanner{padding:11px 12px}.levelHeading strong{font-size:.8rem}.levelTarget{font-size:.58rem}.levelTransitionCard{padding:24px 18px 20px}}
+@media(prefers-reduced-motion:reduce){.levelTransition,.levelTransitionCard,.levelBadge,.transitionDots span{animation:none}.levelProgressTrack span{transition:none}}
