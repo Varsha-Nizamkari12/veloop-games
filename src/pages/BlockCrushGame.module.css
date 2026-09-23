@@ -1711,3 +1711,104 @@
       );
   }
 }
+
+/* =========================
+   LIVE HEARTS + RESPONSIVE POINTER
+   ========================= */
+
+.livesDisplay {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  min-width: 62px;
+}
+
+.heartFilled,
+.heartEmpty {
+  display: inline-grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+}
+
+.heartFilled {
+  color: #ef5368;
+  text-shadow: 0 2px 7px rgba(239, 83, 104, 0.28);
+  transform: scale(1.02);
+}
+
+.heartEmpty {
+  color: #c9ccd6;
+  opacity: 0.9;
+}
+
+.soundButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 45;
+  min-height: 32px;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(12, 15, 31, 0.78);
+  color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.soundButton:hover {
+  background: rgba(30, 34, 61, 0.9);
+  transform: translateY(-1px);
+}
+
+.soundButton:active {
+  transform: translateY(0) scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .canvas {
+    cursor: crosshair !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .soundButton {
+    top: 10px;
+    right: 10px;
+    min-height: 30px;
+    padding: 6px 9px;
+    font-size: 9px;
+  }
+
+  .livesDisplay {
+    gap: 3px;
+    min-width: 56px;
+  }
+
+  .heartFilled,
+  .heartEmpty {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heartFilled,
+  .heartEmpty,
+  .soundButton {
+    transition: none;
+  }
+}

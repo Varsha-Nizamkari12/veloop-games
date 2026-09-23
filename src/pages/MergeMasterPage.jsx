@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGame } from "../context/GameContext.jsx";
 import ErrorState from "../components/ui/ErrorState.jsx";
+import { useGame } from "../context/GameContext.jsx";
 
 import gameImage from "../assets/images/avif/veloop-avif-assets/images/10.avif";
 import gameCoinImage from "../assets/images/avif/veloop-avif-assets/images/game_coin.avif";
@@ -32,28 +32,25 @@ function MergeMasterPage() {
   const canPlay = hasEnoughTokens(ENTRY_FEE);
 
   const handlePlay = () => {
-    if (!canPlay || isStarting) {
-      return;
-    }
+  if (!canPlay || isStarting) {
+    return;
+  }
 
-    const deducted = deductTokens(ENTRY_FEE);
+  const deducted = deductTokens(ENTRY_FEE);
 
-    if (!deducted) {
-      return;
-    }
+  if (!deducted) {
+    return;
+  }
 
-    setStartError(false);
-    setIsStarting(true);
+  setStartError(false);
+  setIsStarting(true);
 
-    window.__veloopStartTimer = window.setTimeout(() => {
-      try {
-        navigate("/games/merge-master/play");
-      } catch {
-        setIsStarting(false);
-        setStartError(true);
-      }
-    }, 350);
-  };
+  window.setTimeout(() => {
+    navigate("/games/merge-master/play", {
+      replace: true,
+    });
+  }, 350);
+};
 
   return (
     <main className={styles.page}>

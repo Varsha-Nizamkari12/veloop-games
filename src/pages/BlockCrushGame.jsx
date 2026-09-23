@@ -180,6 +180,116 @@ function BlockCrushGame() {
 
   const rewardTimerRef = useRef(null);
 
+  // Lightweight Web Audio feedback. Audio starts only after a user gesture.
+  const audioContextRef = useRef(null);
+  const lastSoundTimeRef = useRef(0);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const soundEnabledRef = useRef(true);
+
+  const getAudioContext = () => {
+    if (typeof window === "undefined") {
+      return null;
+    }
+
+    if (!audioContextRef.current) {
+      const AudioContextClass =
+        window.AudioContext ||
+        window.webkitAudioContext;
+
+      if (!AudioContextClass) {
+        return null;
+      }
+
+      audioContextRef.current =
+        new AudioContextClass();
+    }
+
+    return audioContextRef.current;
+  };
+
+  const enableSound = () => {
+    if (!soundEnabledRef.current) {
+      return;
+    }
+
+    const context = getAudioContext();
+
+    if (context?.state === "suspended") {
+      context.resume().catch(() => {});
+    }
+  };
+
+  const playSound = (type) => {
+    if (!soundEnabledRef.current) {
+      return;
+    }
+
+    const now = performance.now();
+    const minimumGap =
+      type === "life" || type === "level" ? 0 : 42;
+
+    if (now - lastSoundTimeRef.current < minimumGap) {
+      return;
+    }
+
+    const context = getAudioContext();
+
+    if (!context || context.state === "suspended") {
+      return;
+    }
+
+    lastSoundTimeRef.current = now;
+
+    const settings = {
+      paddle: { frequency: 260, endFrequency: 420, duration: 0.075, volume: 0.045 },
+      block: { frequency: 520, endFrequency: 760, duration: 0.09, volume: 0.055 },
+      wall: { frequency: 150, endFrequency: 190, duration: 0.045, volume: 0.025 },
+      life: { frequency: 120, endFrequency: 70, duration: 0.18, volume: 0.07 },
+      level: { frequency: 620, endFrequency: 980, duration: 0.18, volume: 0.065 },
+      over: { frequency: 180, endFrequency: 75, duration: 0.28, volume: 0.07 },
+    };
+
+    const sound = settings[type] || settings.block;
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+
+    oscillator.type = type === "wall" ? "triangle" : "sine";
+    oscillator.frequency.setValueAtTime(
+      sound.frequency,
+      context.currentTime
+    );
+    oscillator.frequency.exponentialRampToValueAtTime(
+      Math.max(40, sound.endFrequency),
+      context.currentTime + sound.duration
+    );
+
+    gain.gain.setValueAtTime(0.0001, context.currentTime);
+    gain.gain.exponentialRampToValueAtTime(
+      sound.volume,
+      context.currentTime + 0.008
+    );
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      context.currentTime + sound.duration
+    );
+
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start();
+    oscillator.stop(context.currentTime + sound.duration + 0.02);
+  };
+
+  const toggleSound = () => {
+    const next = !soundEnabledRef.current;
+    soundEnabledRef.current = next;
+    setSoundEnabled(next);
+
+    if (next) {
+      enableSound();
+      playSound("paddle");
+    }
+  };
+
   const calculateReward = (
     currentScore
   ) => {
@@ -227,6 +337,7 @@ function BlockCrushGame() {
     game.levelComplete = true;
     game.paused = true;
     game.lastFrameTime = 0;
+    playSound("level");
 
     setLevelBanner({
       completedLevel,
@@ -583,6 +694,13 @@ function BlockCrushGame() {
           nextPaddleX
         )
       );
+
+    // Draw immediately so the paddle follows the pointer without waiting
+    // for the next animation frame. The game loop still controls physics.
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      drawGame(ctx);
+    }
   };
 
   /*
@@ -621,6 +739,8 @@ function BlockCrushGame() {
   const handlePointerDown = (
     event
   ) => {
+    enableSound();
+
     if (
       event.pointerType ===
         "touch" ||
@@ -662,6 +782,8 @@ function BlockCrushGame() {
   const handleKeyDown = (
     event
   ) => {
+    enableSound();
+
     const game =
       gameStateRef.current;
 
@@ -1280,6 +1402,8 @@ function BlockCrushGame() {
 
       game.ballSpeedX *=
         -1;
+
+      playSound("wall");
     }
 
     if (
@@ -1357,6 +1481,7 @@ function BlockCrushGame() {
         nextSpeed;
 
       game.combo = 0;
+      playSound("paddle");
     }
 
     /* Block collision */
@@ -1442,6 +1567,7 @@ function BlockCrushGame() {
             20
           );
 
+        playSound("block");
         game.hitFlash = 0.12;
 
         const centerX =
@@ -1526,6 +1652,7 @@ function BlockCrushGame() {
       CANVAS_HEIGHT
     ) {
       game.lives -= 1;
+      playSound(game.lives <= 0 ? "over" : "life");
 
       setLives(
         Math.max(
@@ -1678,6 +1805,8 @@ function BlockCrushGame() {
   }, []);
 
   const startFromGuide = () => {
+    enableSound();
+
     localStorage.setItem(
       GUIDE_STORAGE_KEY,
       "true"
@@ -1687,10 +1816,16 @@ function BlockCrushGame() {
   };
 
   useEffect(
-    () => () =>
+    () => () => {
       window.clearTimeout(
         rewardTimerRef.current
-      ),
+      );
+
+      if (audioContextRef.current) {
+        audioContextRef.current.close().catch(() => {});
+        audioContextRef.current = null;
+      }
+    },
     []
   );
 
@@ -1811,7 +1946,17 @@ function BlockCrushGame() {
 
         <div className={styles.hudCard}>
           <span>LIVES</span>
-          <strong>{Math.max(0, lives)} / 3 ❤️</strong>
+          <strong className={styles.livesDisplay} aria-label={`${Math.max(0, lives)} of 3 lives remaining`}>
+            {Array.from({ length: 3 }, (_, index) => (
+              <span
+                key={`life-${index}`}
+                className={index < lives ? styles.heartFilled : styles.heartEmpty}
+                aria-hidden="true"
+              >
+                {index < lives ? "♥" : "♡"}
+              </span>
+            ))}
+          </strong>
         </div>
       </section>
 
@@ -1843,6 +1988,17 @@ function BlockCrushGame() {
           }
           aria-label="Block Crush gameplay"
         />
+
+        <button
+          type="button"
+          className={styles.soundButton}
+          onPointerDown={enableSound}
+          onClick={toggleSound}
+          aria-label={soundEnabled ? "Mute game sounds" : "Turn game sounds on"}
+          aria-pressed={soundEnabled}
+        >
+          {soundEnabled ? "🔊 Sound On" : "🔇 Sound Off"}
+        </button>
 
         {levelTransition && levelBanner && (
           <div className={styles.overlay}>

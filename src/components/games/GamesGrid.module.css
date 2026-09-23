@@ -1,5 +1,5 @@
 /* =========================================================
-   SECTION
+   GAMES CAROUSEL
 ========================================================= */
 
 .section {
@@ -18,16 +18,14 @@
   display: flex;
   align-items: stretch;
 
-  gap: 10px;
+  gap: 12px;
 
   overflow-x: auto;
   overflow-y: hidden;
 
-  padding:
-    2px 1px 7px;
+  padding: 3px 2px 9px;
 
   scroll-behavior: smooth;
-
   scroll-snap-type: x proximity;
 
   scrollbar-width: none;
@@ -41,12 +39,16 @@
   display: none;
 }
 
+.carousel:focus-visible {
+  outline: 2px solid rgba(164, 139, 255, 0.7);
+  outline-offset: 3px;
+
+  border-radius: 10px;
+}
+
 
 /* =========================================================
    SLIDE
-
-   THIS IS THE MOST IMPORTANT PART.
-   It prevents cards from becoming huge.
 ========================================================= */
 
 .slide {
@@ -71,9 +73,8 @@
 
   gap: 5px;
 
-  padding-top: 6px;
+  padding-top: 7px;
 }
-
 
 .dot {
   width: 6px;
@@ -82,42 +83,44 @@
   padding: 0;
 
   border: 0;
-  border-radius: 50%;
+  border-radius: 999px;
 
   cursor: pointer;
 
   background:
-    rgba(130, 143, 190, 0.45);
+    rgba(153, 157, 180, 0.38);
 
   transition:
     width 0.2s ease,
     background 0.2s ease,
-    transform 0.2s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .dot:hover {
   transform: scale(1.25);
 
   background:
-    rgba(177, 158, 255, 0.75);
+    rgba(190, 174, 255, 0.75);
 }
 
+.dot:focus-visible {
+  outline: 2px solid #b8a5ff;
+  outline-offset: 3px;
+}
 
 .activeDot {
-  width: 18px;
-
-  border-radius: 999px;
+  width: 19px;
 
   background:
     linear-gradient(
       90deg,
-      #7350ff,
-      #bb63ee
+      #8365f5,
+      #c06ce2
     );
 
   box-shadow:
-    0 0 10px
-      rgba(123, 77, 255, 0.45);
+    0 0 12px rgba(139, 108, 255, 0.3);
 }
 
 
@@ -127,13 +130,13 @@
 
 @media (max-width: 1100px) {
   .carousel {
-    gap: 9px;
+    gap: 10px;
   }
 
   .slide {
-    flex-basis: 175px;
-    width: 175px;
-    min-width: 175px;
+    flex-basis: 178px;
+    width: 178px;
+    min-width: 178px;
   }
 }
 
@@ -150,9 +153,9 @@
   }
 
   .slide {
-    flex-basis: 185px;
-    width: 185px;
-    min-width: 185px;
+    flex-basis: 180px;
+    width: 180px;
+    min-width: 180px;
   }
 }
 
@@ -165,7 +168,7 @@
   .carousel {
     gap: 9px;
 
-    padding-bottom: 6px;
+    padding-bottom: 7px;
   }
 
   .slide {
@@ -175,7 +178,7 @@
   }
 
   .dots {
-    padding-top: 5px;
+    padding-top: 6px;
   }
 
   .dot {

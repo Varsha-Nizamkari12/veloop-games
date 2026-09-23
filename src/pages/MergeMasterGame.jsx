@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useGame } from "../context/GameContext.jsx";
 
 import gameCoinImage from "../assets/images/avif/veloop-avif-assets/images/game_coin.avif";
-import tokenImage from "../assets/images/avif/veloop-avif-assets/images/token-transparent.avif";
 
 import styles from "./MergeMasterGame.module.css";
 
@@ -617,12 +616,12 @@ function MergeMasterGame() {
 
         <div className={styles.balanceGroup} aria-label="Balances">
           <div className={styles.coinBalance}>
-            <img src={tokenImage} alt="Tokens" className={styles.tokenIcon} />
+            <span className={styles.balanceTokenIcon} aria-hidden="true">T</span>
             <span>{tokens}</span>
             <small>Tokens</small>
           </div>
           <div className={styles.coinBalance}>
-            <img src={gameCoinImage} alt="Game Coins" className={styles.coinIcon} />
+            <img src={gameCoinImage} alt="" className={styles.coinIcon} />
             <strong>{gameCoins}</strong>
             <small>Game Coins</small>
           </div>

@@ -1,41 +1,46 @@
 /* =========================================================
-   CARD
+   PREMIUM GAME CARD
 ========================================================= */
 
 .card {
   width: 100%;
   min-width: 0;
+
   overflow: hidden;
 
-  border: 1px solid rgba(129, 142, 224, 0.28);
+  border:
+    1px solid rgba(255, 255, 255, 0.1);
+
   border-radius: 13px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(19, 31, 72, 0.98),
-      rgba(8, 17, 43, 0.98)
+      #292c40 0%,
+      #202335 52%,
+      #1d2030 100%
     );
 
   box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.25),
-    inset 0 1px rgba(255, 255, 255, 0.04);
+    0 10px 24px rgba(0, 0, 0, 0.24),
+    inset 0 1px rgba(255, 255, 255, 0.055);
 
   transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 
   border-color:
-    rgba(143, 126, 255, 0.55);
+    rgba(165, 141, 255, 0.38);
 
   box-shadow:
-    0 16px 32px rgba(0, 0, 0, 0.35),
-    0 0 22px rgba(104, 75, 255, 0.12);
+    0 17px 34px rgba(0, 0, 0, 0.34),
+    0 0 25px rgba(139, 108, 255, 0.08),
+    inset 0 1px rgba(255, 255, 255, 0.07);
 }
 
 
@@ -48,29 +53,50 @@
 
   width: 100%;
 
-  /* IMPORTANT:
-     This prevents the giant image problem. */
   aspect-ratio: 1.55 / 1;
 
   overflow: hidden;
 
-  background: #101a3b;
+  background: #171a29;
+}
+
+.artwork::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.03) 35%,
+      rgba(0, 0, 0, 0.22) 100%
+    );
 }
 
 .artwork::after {
   content: "";
 
   position: absolute;
-  inset: auto 0 0;
 
-  height: 38%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 30%;
+
+  z-index: 2;
 
   pointer-events: none;
 
   background:
     linear-gradient(
       to top,
-      rgba(4, 9, 25, 0.65),
+      rgba(15, 17, 29, 0.68),
       transparent
     );
 }
@@ -85,12 +111,14 @@
   object-position: center;
 
   transition:
-    transform 0.3s ease,
-    filter 0.3s ease;
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.35s ease;
 }
 
 .card:hover .artwork img {
-  transform: scale(1.035);
+  transform: scale(1.045);
+
+  filter: saturate(1.04) brightness(1.03);
 }
 
 
@@ -104,32 +132,33 @@
   top: 7px;
   left: 7px;
 
-  z-index: 3;
+  z-index: 5;
 
-  padding: 4px 7px;
+  padding: 5px 7px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.2);
 
   border-radius: 999px;
 
   color: #fff;
 
+  background:
+    linear-gradient(
+      135deg,
+      #7657ef,
+      #ae60dc
+    );
+
+  box-shadow:
+    0 6px 15px rgba(80, 54, 180, 0.35);
+
   font-size: 7px;
   line-height: 1;
 
   font-weight: 900;
-  letter-spacing: 0.04em;
 
-  background:
-    linear-gradient(
-      135deg,
-      #6c45ff,
-      #a74be8
-    );
-
-  border:
-    1px solid rgba(255, 255, 255, 0.22);
-
-  box-shadow:
-    0 5px 14px rgba(72, 40, 190, 0.35);
+  letter-spacing: 0.05em;
 }
 
 
@@ -138,7 +167,7 @@
 ========================================================= */
 
 .cardBody {
-  padding: 8px 9px 9px;
+  padding: 9px 9px 10px;
 }
 
 
@@ -155,7 +184,7 @@
 
   gap: 7px;
 
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 }
 
 .title {
@@ -164,24 +193,26 @@
   margin: 0;
 
   overflow: hidden;
+
   white-space: nowrap;
   text-overflow: ellipsis;
 
-  color: #fff;
+  color: #f7f7fa;
 
   font-size: 11px;
   line-height: 1.15;
 
-  font-weight: 800;
+  font-weight: 850;
 }
 
 .gameNumber {
   flex-shrink: 0;
 
-  color: #707da7;
+  color: #777c91;
 
   font-size: 7px;
-  font-weight: 800;
+
+  font-weight: 850;
 }
 
 
@@ -210,10 +241,10 @@
 
   gap: 4px;
 
-  color: #aab4d2;
+  color: #969bad;
 
   font-size: 8px;
-  font-weight: 600;
+  font-weight: 650;
 
   white-space: nowrap;
 }
@@ -228,9 +259,11 @@
 }
 
 .tokenCost strong {
-  color: #fff;
+  color: #f7f7fa;
 
   font-size: 8px;
+
+  font-weight: 900;
 }
 
 
@@ -241,6 +274,8 @@
 .playButton {
   min-height: 27px;
 
+  position: relative;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -249,10 +284,25 @@
 
   padding: 0 9px;
 
-  border: 1px solid rgba(191, 177, 255, 0.35);
+  overflow: hidden;
+
+  border:
+    1px solid rgba(202, 189, 255, 0.25);
+
   border-radius: 7px;
 
   color: #fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7657ef,
+      #a65bda
+    );
+
+  box-shadow:
+    0 6px 14px rgba(91, 59, 203, 0.26),
+    inset 0 1px rgba(255, 255, 255, 0.16);
 
   font-size: 7.5px;
   font-weight: 900;
@@ -260,16 +310,6 @@
   white-space: nowrap;
 
   cursor: pointer;
-
-  background:
-    linear-gradient(
-      135deg,
-      #5d3cff,
-      #8c48e9
-    );
-
-  box-shadow:
-    0 5px 12px rgba(77, 48, 220, 0.28);
 
   transition:
     transform 0.18s ease,
@@ -283,15 +323,16 @@
   filter: brightness(1.08);
 
   box-shadow:
-    0 7px 16px rgba(77, 48, 220, 0.42);
+    0 8px 18px rgba(91, 59, 203, 0.38),
+    inset 0 1px rgba(255, 255, 255, 0.18);
 }
 
 .playButton:active:not(:disabled) {
-  transform: scale(0.96);
+  transform: scale(0.95);
 }
 
 .playButton:focus-visible {
-  outline: 2px solid #bbaaff;
+  outline: 2px solid #c2b3ff;
   outline-offset: 2px;
 }
 
@@ -302,7 +343,7 @@
 
 
 /* =========================================================
-   SHIMMER
+   CONTINUOUS SHIMMER
 ========================================================= */
 
 .playButton::before {
@@ -310,11 +351,11 @@
 
   position: absolute;
 
-  width: 40px;
-  height: 100%;
+  top: -20%;
+  left: -80px;
 
-  top: 0;
-  left: -70px;
+  width: 42px;
+  height: 140%;
 
   pointer-events: none;
 
@@ -322,28 +363,24 @@
     linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.22),
       transparent
     );
 
   transform: skewX(-20deg);
 
-  animation: buttonShimmer 2.8s infinite;
-}
-
-.playButton {
-  position: relative;
-  overflow: hidden;
+  animation:
+    buttonShimmer 2.8s ease-in-out infinite;
 }
 
 @keyframes buttonShimmer {
   0% {
-    left: -70px;
+    left: -80px;
   }
 
-  45%,
+  42%,
   100% {
-    left: 130%;
+    left: 135%;
   }
 }
 
@@ -354,19 +391,20 @@
 
 .loadingButton {
   cursor: wait;
-  opacity: 0.85;
+
+  opacity: 0.88;
 }
 
 .loadingSpinner {
   width: 10px;
   height: 10px;
 
-  border-radius: 50%;
-
   border:
-    2px solid rgba(255, 255, 255, 0.35);
+    2px solid rgba(255, 255, 255, 0.3);
 
   border-top-color: #fff;
+
+  border-radius: 50%;
 
   animation:
     spin 0.7s linear infinite;
@@ -385,39 +423,44 @@
 
 .insufficient {
   border-color:
-    rgba(255, 184, 86, 0.25);
+    rgba(255, 188, 91, 0.22);
 }
 
 .insufficientButton {
   background:
     linear-gradient(
       135deg,
-      #3a3b55,
-      #50516c
+      #3d4054,
+      #4b4e63
     );
 
   border-color:
-    rgba(255, 255, 255, 0.12);
+    rgba(255, 255, 255, 0.1);
 
-  box-shadow: none;
+  box-shadow:
+    none;
 }
 
 
 /* =========================================================
-   DISABLED / COMING SOON
+   COMING SOON
 ========================================================= */
 
 .disabled .artwork img {
-  filter: saturate(0.78);
+  filter:
+    saturate(0.72)
+    brightness(0.9);
 }
 
 .disabled .playButton {
   background:
     linear-gradient(
       135deg,
-      #4b4c68,
-      #343650
+      #45485d,
+      #35384b
     );
+
+  box-shadow: none;
 }
 
 
@@ -435,7 +478,7 @@
   }
 
   .cardBody {
-    padding: 7px 8px 8px;
+    padding: 8px;
   }
 
   .title {
@@ -453,6 +496,7 @@
 
   .playButton {
     min-height: 26px;
+
     padding-inline: 8px;
 
     font-size: 7px;
