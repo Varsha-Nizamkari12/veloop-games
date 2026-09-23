@@ -1,251 +1,509 @@
+/* =========================================================
+   CARD
+========================================================= */
+
 .card {
-  background: #0d0f1c;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
+  width: 100%;
+  min-width: 0;
   overflow: hidden;
-  height: 100%;
+
+  border: 1px solid rgba(129, 142, 224, 0.28);
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(19, 31, 72, 0.98),
+      rgba(8, 17, 43, 0.98)
+    );
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.25),
+    inset 0 1px rgba(255, 255, 255, 0.04);
+
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px) scale(1.02);
+  transform: translateY(-4px);
+
+  border-color:
+    rgba(143, 126, 255, 0.55);
+
   box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 255, 255, 0.22);
+    0 16px 32px rgba(0, 0, 0, 0.35),
+    0 0 22px rgba(104, 75, 255, 0.12);
 }
 
-/* Supplied artwork stays image-based; the promotional footer is cropped so the coded UI can render the reward state separately. */
 
-.imageWrapper {
+/* =========================================================
+   ARTWORK
+========================================================= */
+
+.artwork {
+  position: relative;
+
   width: 100%;
-  aspect-ratio: 4 / 5;
+
+  /* IMPORTANT:
+     This prevents the giant image problem. */
+  aspect-ratio: 1.55 / 1;
+
   overflow: hidden;
-  background: #080a14;
+
+  background: #101a3b;
 }
 
-.image {
+.artwork::after {
+  content: "";
+
+  position: absolute;
+  inset: auto 0 0;
+
+  height: 38%;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(4, 9, 25, 0.65),
+      transparent
+    );
+}
+
+.artwork img {
+  display: block;
+
   width: 100%;
   height: 100%;
-  display: block;
+
   object-fit: cover;
-  object-position: top center;
+  object-position: center;
+
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
 }
 
-/* Card content */
+.card:hover .artwork img {
+  transform: scale(1.035);
+}
 
-.content {
-  padding: 16px;
-  text-align: center;
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.badge {
+  position: absolute;
+
+  top: 7px;
+  left: 7px;
+
+  z-index: 3;
+
+  padding: 4px 7px;
+
+  border-radius: 999px;
+
+  color: #fff;
+
+  font-size: 7px;
+  line-height: 1;
+
+  font-weight: 900;
+  letter-spacing: 0.04em;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6c45ff,
+      #a74be8
+    );
+
+  border:
+    1px solid rgba(255, 255, 255, 0.22);
+
+  box-shadow:
+    0 5px 14px rgba(72, 40, 190, 0.35);
+}
+
+
+/* =========================================================
+   CARD BODY
+========================================================= */
+
+.cardBody {
+  padding: 8px 9px 9px;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.titleRow {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 7px;
+
+  margin-bottom: 7px;
 }
 
 .title {
-  color: #ffffff;
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin: 0 0 12px;
+  min-width: 0;
+
+  margin: 0;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  color: #fff;
+
+  font-size: 11px;
+  line-height: 1.15;
+
+  font-weight: 800;
 }
 
-/* Token requirement */
+.gameNumber {
+  flex-shrink: 0;
 
-.tokenCost {
+  color: #707da7;
+
+  font-size: 7px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   ACTION ROW
+========================================================= */
+
+.actionRow {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 7px;
-  color: #ffffff;
-  font-size: 0.9rem;
+  justify-content: space-between;
+
+  gap: 6px;
+}
+
+
+/* =========================================================
+   TOKEN COST
+========================================================= */
+
+.tokenCost {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  color: #aab4d2;
+
+  font-size: 8px;
   font-weight: 600;
-  margin-bottom: 12px;
+
+  white-space: nowrap;
 }
 
-.tokenIcon {
-  width: 22px;
-  height: 22px;
+.tokenCost img {
+  width: 17px;
+  height: 17px;
+
+  flex-shrink: 0;
+
   object-fit: contain;
-  border-radius: 50%;
 }
 
-/* Play Now button */
+.tokenCost strong {
+  color: #fff;
 
-.button {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  border: none;
-  border-radius: 10px;
-  padding: 11px 16px;
-  background: linear-gradient(
-    135deg,
-    #6d5dfc,
-    #8b7cff
-  );
-  color: #ffffff;
-  font-weight: 700;
+  font-size: 8px;
+}
+
+
+/* =========================================================
+   PLAY BUTTON
+========================================================= */
+
+.playButton {
+  min-height: 27px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  padding: 0 9px;
+
+  border: 1px solid rgba(191, 177, 255, 0.35);
+  border-radius: 7px;
+
+  color: #fff;
+
+  font-size: 7.5px;
+  font-weight: 900;
+
+  white-space: nowrap;
+
   cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    opacity 0.2s ease;
-}
 
-.button:hover {
-  transform: translateY(-1px);
+  background:
+    linear-gradient(
+      135deg,
+      #5d3cff,
+      #8c48e9
+    );
+
   box-shadow:
-    0 6px 18px rgba(109, 93, 252, 0.3);
+    0 5px 12px rgba(77, 48, 220, 0.28);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
 }
 
-.button:active {
-  transform: scale(0.97);
+.playButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  filter: brightness(1.08);
+
+  box-shadow:
+    0 7px 16px rgba(77, 48, 220, 0.42);
 }
 
-/* Infinite premium shimmer */
+.playButton:active:not(:disabled) {
+  transform: scale(0.96);
+}
 
-.button::after {
+.playButton:focus-visible {
+  outline: 2px solid #bbaaff;
+  outline-offset: 2px;
+}
+
+.arrow {
+  font-size: 11px;
+  line-height: 1;
+}
+
+
+/* =========================================================
+   SHIMMER
+========================================================= */
+
+.playButton::before {
   content: "";
+
   position: absolute;
-  top: 0;
-  left: -120%;
-  width: 55%;
+
+  width: 40px;
   height: 100%;
-  background: linear-gradient(
-    100deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.15) 35%,
-    rgba(255, 255, 255, 0.65) 50%,
-    rgba(255, 255, 255, 0.15) 65%,
-    transparent 100%
-  );
-  transform: skewX(-20deg);
+
+  top: 0;
+  left: -70px;
+
   pointer-events: none;
-  animation: shimmer 2.8s infinite;
-  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+
+  transform: skewX(-20deg);
+
+  animation: buttonShimmer 2.8s infinite;
 }
 
-.button span {
+.playButton {
   position: relative;
-  z-index: 2;
+  overflow: hidden;
 }
 
-@keyframes shimmer {
+@keyframes buttonShimmer {
   0% {
-    left: -120%;
+    left: -70px;
   }
 
-  45% {
-    left: 130%;
-  }
-
+  45%,
   100% {
     left: 130%;
   }
 }
 
-/* Insufficient token state */
 
-.button:disabled,
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loadingButton {
+  cursor: wait;
+  opacity: 0.85;
+}
+
+.loadingSpinner {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  border:
+    2px solid rgba(255, 255, 255, 0.35);
+
+  border-top-color: #fff;
+
+  animation:
+    spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   INSUFFICIENT TOKENS
+========================================================= */
+
 .insufficient {
-  background: #707487;
-  opacity: 0.65;
-  cursor: not-allowed;
-  transform: none;
+  border-color:
+    rgba(255, 184, 86, 0.25);
+}
+
+.insufficientButton {
+  background:
+    linear-gradient(
+      135deg,
+      #3a3b55,
+      #50516c
+    );
+
+  border-color:
+    rgba(255, 255, 255, 0.12);
+
   box-shadow: none;
 }
 
-.button:disabled::after,
-.insufficient::after {
-  animation: none;
+
+/* =========================================================
+   DISABLED / COMING SOON
+========================================================= */
+
+.disabled .artwork img {
+  filter: saturate(0.78);
 }
 
-.button:disabled:hover,
-.insufficient:hover {
-  transform: none;
-  box-shadow: none;
+.disabled .playButton {
+  background:
+    linear-gradient(
+      135deg,
+      #4b4c68,
+      #343650
+    );
 }
 
-/* Keyboard focus */
 
-.button:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 3px;
-}
+/* =========================================================
+   MOBILE
+========================================================= */
 
-/* Mobile tap feedback */
-
-@media (hover: none) {
-  .card:hover {
-    transform: none;
-    box-shadow: none;
+@media (max-width: 720px) {
+  .card {
+    border-radius: 11px;
   }
 
-  .button:hover {
-    transform: none;
-    box-shadow: none;
+  .artwork {
+    aspect-ratio: 1.45 / 1;
   }
 
-  .button:active {
-    transform: scale(0.96);
-  }
-}
-
-.balanceText {
-  margin: 7px 0 0;
-  color: #aeb2c3;
-  font-size: 0.75rem;
-}
-
-/* Reduced motion */
-
-@media (prefers-reduced-motion: reduce) {
-  .button::after {
-    animation: none;
-  }
-
-  .card,
-  .button {
-    transition: none;
-  }
-
-  .card:hover,
-  .button:hover,
-  .button:active {
-    transform: none;
-  }
-}
-
-/* Tablet / mobile */
-
-@media (max-width: 768px) {
-  .content {
-    padding: 14px;
-  }
-
-  .imageWrapper {
-    aspect-ratio: 4 / 5;
-  }
-}
-
-@media (max-width: 480px) {
-  .content {
-    padding: 12px;
+  .cardBody {
+    padding: 7px 8px 8px;
   }
 
   .title {
-    font-size: 1rem;
+    font-size: 10px;
   }
 
   .tokenCost {
-    font-size: 0.82rem;
+    font-size: 7.5px;
   }
 
-  .tokenIcon {
-    width: 20px;
-    height: 20px;
+  .tokenCost img {
+    width: 16px;
+    height: 16px;
   }
 
-  .button {
-    padding: 10px 12px;
+  .playButton {
+    min-height: 26px;
+    padding-inline: 8px;
+
+    font-size: 7px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+  .artwork {
+    aspect-ratio: 1.35 / 1;
+  }
+
+  .titleRow {
+    margin-bottom: 6px;
+  }
+
+  .gameNumber {
+    display: none;
+  }
+
+  .playButton {
+    padding-inline: 7px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .artwork img,
+  .playButton {
+    transition: none;
+  }
+
+  .playButton::before,
+  .loadingSpinner {
+    animation: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .card:hover .artwork img {
+    transform: none;
   }
 }
