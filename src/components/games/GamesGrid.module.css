@@ -18,12 +18,12 @@
   display: flex;
   align-items: stretch;
 
-  gap: 12px;
+  gap: 18px;
 
   overflow-x: auto;
   overflow-y: hidden;
 
-  padding: 3px 2px 9px;
+  padding: 6px 4px 14px;
 
   scroll-behavior: smooth;
   scroll-snap-type: x proximity;
@@ -43,19 +43,20 @@
   outline: 2px solid rgba(164, 139, 255, 0.7);
   outline-offset: 3px;
 
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 
 /* =========================================================
-   SLIDE
+   GAME SLIDE
+   Larger banner size
 ========================================================= */
 
 .slide {
-  flex: 0 0 190px;
+  flex: 0 0 270px;
 
-  width: 190px;
-  min-width: 190px;
+  width: 270px;
+  min-width: 270px;
 
   scroll-snap-align: start;
 }
@@ -71,14 +72,14 @@
   align-items: center;
   justify-content: center;
 
-  gap: 5px;
+  gap: 6px;
 
-  padding-top: 7px;
+  padding-top: 9px;
 }
 
 .dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 
   padding: 0;
 
@@ -87,8 +88,7 @@
 
   cursor: pointer;
 
-  background:
-    rgba(153, 157, 180, 0.38);
+  background: rgba(153, 157, 180, 0.38);
 
   transition:
     width 0.2s ease,
@@ -100,8 +100,7 @@
 .dot:hover {
   transform: scale(1.25);
 
-  background:
-    rgba(190, 174, 255, 0.75);
+  background: rgba(190, 174, 255, 0.75);
 }
 
 .dot:focus-visible {
@@ -110,7 +109,7 @@
 }
 
 .activeDot {
-  width: 19px;
+  width: 22px;
 
   background:
     linear-gradient(
@@ -130,13 +129,13 @@
 
 @media (max-width: 1100px) {
   .carousel {
-    gap: 10px;
+    gap: 16px;
   }
 
   .slide {
-    flex-basis: 178px;
-    width: 178px;
-    min-width: 178px;
+    flex-basis: 250px;
+    width: 250px;
+    min-width: 250px;
   }
 }
 
@@ -147,15 +146,15 @@
 
 @media (max-width: 850px) {
   .carousel {
-    gap: 9px;
+    gap: 14px;
 
     scroll-snap-type: x mandatory;
   }
 
   .slide {
-    flex-basis: 180px;
-    width: 180px;
-    min-width: 180px;
+    flex-basis: 235px;
+    width: 235px;
+    min-width: 235px;
   }
 }
 
@@ -166,28 +165,31 @@
 
 @media (max-width: 720px) {
   .carousel {
-    gap: 9px;
+    gap: 12px;
 
-    padding-bottom: 7px;
+    padding:
+      5px
+      4px
+      11px;
   }
 
   .slide {
-    flex-basis: 165px;
-    width: 165px;
-    min-width: 165px;
+    flex-basis: 215px;
+    width: 215px;
+    min-width: 215px;
   }
 
   .dots {
-    padding-top: 6px;
+    padding-top: 7px;
   }
 
   .dot {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
   }
 
   .activeDot {
-    width: 15px;
+    width: 18px;
   }
 }
 
@@ -198,13 +200,13 @@
 
 @media (max-width: 480px) {
   .carousel {
-    gap: 8px;
+    gap: 10px;
   }
 
   .slide {
-    flex-basis: 155px;
-    width: 155px;
-    min-width: 155px;
+    flex-basis: 195px;
+    width: 195px;
+    min-width: 195px;
   }
 }
 
@@ -215,9 +217,9 @@
 
 @media (max-width: 360px) {
   .slide {
-    flex-basis: 148px;
-    width: 148px;
-    min-width: 148px;
+    flex-basis: 185px;
+    width: 185px;
+    min-width: 185px;
   }
 }
 
