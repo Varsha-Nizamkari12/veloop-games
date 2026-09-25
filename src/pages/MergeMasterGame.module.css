@@ -360,3 +360,545 @@
   line-height: 1;
   vertical-align: middle;
 }
+/* =========================================================
+   VELOOP — MERGE MASTER FULLSCREEN DARK GAME UI
+========================================================= */
+
+/* Full viewport */
+.page {
+  min-height: 100dvh !important;
+  width: 100% !important;
+
+  padding: 14px 18px 24px !important;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(102, 88, 217, 0.16),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      #090b14 0%,
+      #0d1020 48%,
+      #080a12 100%
+    ) !important;
+
+  color: #f5f7ff !important;
+}
+
+/* Header */
+.header {
+  width: min(1180px, 100%) !important;
+  margin-bottom: 12px !important;
+}
+
+.backButton {
+  background: #151927 !important;
+  border-color: rgba(255,255,255,.10) !important;
+  color: #f5f7ff !important;
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.30) !important;
+}
+
+.backButton:hover {
+  background: #1d2234 !important;
+}
+
+.eyebrow {
+  color: #9187ee !important;
+}
+
+.titleBlock h1 {
+  color: #ffffff !important;
+}
+
+/* Balance */
+.coinBalance {
+  background: #141826 !important;
+  border-color: rgba(255,255,255,.10) !important;
+  color: #ffffff !important;
+
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.30) !important;
+}
+
+.coinBalance small {
+  color: #8f95aa !important;
+}
+
+.coinBalance strong,
+.coinBalance > span:not(.balanceTokenIcon) {
+  color: #ffffff !important;
+}
+
+/* Level banner */
+.levelBanner {
+  width: min(720px, 100%) !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      #171b2b,
+      #101321
+    ) !important;
+
+  border-color: rgba(255,255,255,.09) !important;
+
+  box-shadow:
+    0 12px 32px rgba(0,0,0,.32) !important;
+}
+
+.levelKicker {
+  color: #a69dff !important;
+}
+
+.levelHeading strong {
+  color: #f5f7ff !important;
+}
+
+.levelTarget {
+  background: #272344 !important;
+  color: #aaa1ff !important;
+}
+
+.levelProgressTrack {
+  background: #292d3d !important;
+}
+
+.levelBanner p {
+  color: #8f95aa !important;
+}
+
+/* HUD */
+.hud {
+  width: min(620px, 100%) !important;
+}
+
+.hudCard {
+  background:
+    linear-gradient(
+      145deg,
+      #171b2b,
+      #101321
+    ) !important;
+
+  border-color: rgba(255,255,255,.09) !important;
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.30),
+    inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+
+.hudCard span {
+  color: #8f95aa !important;
+}
+
+.hudCard strong {
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   FULLSCREEN GAME AREA
+========================================================= */
+
+.gameSection {
+  width: min(1000px, 96vw) !important;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(102,88,217,.10),
+      transparent 55%
+    ),
+    linear-gradient(
+      145deg,
+      #111523,
+      #090c15
+    ) !important;
+
+  border:
+    1px solid rgba(132,120,255,.16) !important;
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.50),
+    inset 0 1px 0 rgba(255,255,255,.04) !important;
+
+  border-radius: 26px !important;
+}
+
+/* Larger 2048 board */
+.board {
+  width: min(68vh, 560px) !important;
+  height: min(68vh, 560px) !important;
+
+  max-width: 82vw !important;
+  max-height: 82vw !important;
+
+  padding: clamp(10px, 1.3vw, 16px) !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      #24283a,
+      #111522
+    ) !important;
+
+  border:
+    1px solid rgba(132,120,255,.22) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    0 25px 65px rgba(0,0,0,.48),
+    0 0 45px rgba(102,88,217,.08) !important;
+}
+
+/* Empty cells */
+.cell[data-value="0"] {
+  background:
+    rgba(255,255,255,.045) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.035) !important;
+}
+
+/* Keep numbered tiles attractive in dark mode */
+.cell[data-value="2"] {
+  background:
+    linear-gradient(145deg,#dcd8ef,#aaa4c9) !important;
+  color: #252136 !important;
+}
+
+.cell[data-value="4"] {
+  background:
+    linear-gradient(145deg,#c9c1ec,#8f86c7) !important;
+  color: #242035 !important;
+}
+
+.cell[data-value="8"] {
+  background:
+    linear-gradient(145deg,#9b8cff,#6658d9) !important;
+  color: #ffffff !important;
+}
+
+.cell[data-value="16"] {
+  background:
+    linear-gradient(145deg,#806ef0,#5142ae) !important;
+  color: #ffffff !important;
+}
+
+.cell[data-value="32"] {
+  background:
+    linear-gradient(145deg,#6658d9,#40318f) !important;
+  color: #ffffff !important;
+}
+
+/* Controls */
+.controls {
+  background:
+    linear-gradient(
+      145deg,
+      #181c2b,
+      #101321
+    ) !important;
+
+  border-color:
+    rgba(255,255,255,.09) !important;
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.30) !important;
+}
+
+.controls::before {
+  color: #7f879d !important;
+}
+
+.controls button {
+  background:
+    linear-gradient(
+      145deg,
+      #24283a,
+      #171b29
+    ) !important;
+
+  border:
+    1px solid rgba(255,255,255,.08) !important;
+
+  color: #e5e8f4 !important;
+
+  box-shadow:
+    0 7px 18px rgba(0,0,0,.30) !important;
+}
+
+.controls button:hover {
+  background:
+    linear-gradient(
+      145deg,
+      #30354b,
+      #202437
+    ) !important;
+}
+
+/* Action buttons */
+.actionButton {
+  background:
+    linear-gradient(
+      145deg,
+      #1c2131,
+      #121624
+    ) !important;
+
+  border-color:
+    rgba(255,255,255,.09) !important;
+
+  color: #dfe3f2 !important;
+
+  box-shadow:
+    0 9px 22px rgba(0,0,0,.30) !important;
+}
+
+.actionButton:hover:not(:disabled) {
+  background:
+    linear-gradient(
+      145deg,
+      #292e43,
+      #191e2f
+    ) !important;
+}
+
+/* Instruction */
+.instruction {
+  color: #858ca3 !important;
+}
+
+/* Guide */
+.guideButton {
+  background: #151927 !important;
+  border-color: rgba(132,120,255,.30) !important;
+  color: #aaa1ff !important;
+}
+
+.guideStep {
+  background:
+    linear-gradient(
+      145deg,
+      #1b1f30,
+      #131725
+    ) !important;
+
+  border-color:
+    rgba(255,255,255,.08) !important;
+}
+
+.guideIcon {
+  background: #272344 !important;
+  color: #aaa1ff !important;
+}
+
+.guideStep strong {
+  color: #f4f6ff !important;
+}
+
+.guideStep div span {
+  color: #9299ad !important;
+}
+
+/* Dark modals */
+.overlay {
+  background:
+    rgba(2,4,10,.80) !important;
+}
+
+.modal {
+  background:
+    linear-gradient(
+      145deg,
+      #181c2b,
+      #101321
+    ) !important;
+
+  border-color:
+    rgba(255,255,255,.10) !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.60) !important;
+}
+
+.modal h2 {
+  color: #ffffff !important;
+}
+
+.modal p,
+.modal ul {
+  color: #aab0c2 !important;
+}
+
+.modalLabel {
+  color: #9b91ff !important;
+}
+
+.closeButton {
+  background: #24293a !important;
+  color: #dce1f0 !important;
+}
+
+.secondaryButton {
+  background: #1a1e2d !important;
+  border-color: rgba(255,255,255,.10) !important;
+  color: #dce1f0 !important;
+}
+
+/* Level transition */
+.levelTransition {
+  background:
+    rgba(3,5,12,.80) !important;
+}
+
+.levelTransitionCard {
+  background:
+    linear-gradient(
+      145deg,
+      #181c2b,
+      #101321
+    ) !important;
+
+  border-color:
+    rgba(255,255,255,.10) !important;
+
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.60) !important;
+}
+
+.levelTransitionCard h2 {
+  color: #ffffff !important;
+}
+
+.levelTransitionCard p {
+  color: #aab0c2 !important;
+}
+
+.nextLevelPill {
+  background: #272344 !important;
+  border-color: rgba(132,120,255,.25) !important;
+  color: #aaa1ff !important;
+}
+
+/* Bottom nav */
+.bottomNav {
+  background:
+    rgba(8,10,18,.95) !important;
+
+  border-top-color:
+    rgba(255,255,255,.08) !important;
+}
+
+.navItem {
+  color: #858ca3 !important;
+}
+
+.navItem:hover {
+  color: #aaa1ff !important;
+}
+
+/* =========================================================
+   DESKTOP — TRUE LARGE PLAY AREA
+========================================================= */
+
+@media (min-width: 900px) {
+
+  .gameSection {
+    min-height: 70dvh !important;
+
+    grid-template-columns:
+      minmax(500px, 1fr)
+      190px !important;
+
+    column-gap: 40px !important;
+
+    padding: 32px !important;
+  }
+
+  .board {
+    width: min(62vh, 560px) !important;
+    height: min(62vh, 560px) !important;
+
+    max-width: 560px !important;
+    max-height: 560px !important;
+  }
+}
+
+/* Large monitors */
+@media (min-width: 1400px) {
+
+  .gameSection {
+    width: min(1180px, 94vw) !important;
+    min-height: 76dvh !important;
+  }
+
+  .board {
+    width: min(66vh, 620px) !important;
+    height: min(66vh, 620px) !important;
+
+    max-width: 620px !important;
+    max-height: 620px !important;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 899px) {
+
+  .page {
+    padding:
+      10px
+      10px
+      20px !important;
+  }
+
+  .gameSection {
+    width: 100% !important;
+
+    min-height: calc(100dvh - 210px) !important;
+
+    border-radius: 20px !important;
+
+    padding: 16px !important;
+  }
+
+  .board {
+    width: min(88vw, 520px) !important;
+    height: min(88vw, 520px) !important;
+
+    max-width: 88vw !important;
+    max-height: 88vw !important;
+  }
+
+  .actionRow {
+    margin-top: 14px !important;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+
+  .gameSection {
+    padding: 12px !important;
+  }
+
+  .board {
+    width: min(92vw, 420px) !important;
+    height: min(92vw, 420px) !important;
+
+    max-width: 92vw !important;
+    max-height: 92vw !important;
+  }
+
+  .controls {
+    margin-top: 12px !important;
+  }
+}

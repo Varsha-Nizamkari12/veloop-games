@@ -1812,3 +1812,356 @@
     transition: none;
   }
 }
+/* =========================================================
+   VELOOP — BLOCK CRUSH FULLSCREEN DARK GAME UI
+========================================================= */
+
+/* Full viewport game experience */
+.page {
+  min-height: 100dvh !important;
+  width: 100% !important;
+  padding: 14px 18px 24px !important;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(102, 88, 217, 0.16),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      #090b14 0%,
+      #0d1020 48%,
+      #080a12 100%
+    ) !important;
+
+  color: #f5f7ff !important;
+}
+
+/* Header */
+.header {
+  width: min(1180px, 100%) !important;
+  margin-bottom: 12px !important;
+}
+
+.backButton {
+  background: #151927 !important;
+  border-color: rgba(255,255,255,.10) !important;
+  color: #f5f7ff !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.30) !important;
+}
+
+.backButton:hover {
+  background: #1b1f31 !important;
+}
+
+.gameLabel {
+  color: #9187ee !important;
+}
+
+.gameTitle h1 {
+  color: #ffffff !important;
+}
+
+/* Token / coin balances */
+.coinBalance {
+  background: #141826 !important;
+  border-color: rgba(255,255,255,.10) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28) !important;
+}
+
+.coinBalance small {
+  color: #8f95aa !important;
+}
+
+.coinBalance strong,
+.coinBalance span {
+  color: #ffffff !important;
+}
+
+/* HUD */
+.hud {
+  width: min(620px, 100%) !important;
+  margin-bottom: 14px !important;
+}
+
+.hudCard {
+  background:
+    linear-gradient(
+      145deg,
+      #171b2b,
+      #101321
+    ) !important;
+
+  border-color: rgba(255,255,255,.09) !important;
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.30),
+    inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+
+.hudCard span {
+  color: #8f95aa !important;
+}
+
+.hudCard strong {
+  color: #ffffff !important;
+}
+
+/* Full-size gameplay area */
+.gameArea {
+  width: 100% !important;
+  max-width: none !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  filter: drop-shadow(
+    0 25px 55px rgba(0,0,0,.45)
+  ) !important;
+}
+
+/*
+   Keep the original 360x560 canvas ratio,
+   but scale it to the available viewport.
+*/
+.canvas {
+  width: auto !important;
+  height: min(72dvh, 820px) !important;
+
+  max-width: 94vw !important;
+  max-height: 72dvh !important;
+
+  border: 1px solid rgba(132,120,255,.35) !important;
+  border-radius: 22px !important;
+
+  background: #090c18 !important;
+
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.025),
+    0 25px 70px rgba(0,0,0,.55),
+    0 0 45px rgba(102,88,217,.12),
+    inset 0 1px 0 rgba(255,255,255,.08) !important;
+}
+
+/* Sound button */
+.soundButton {
+  margin-top: 12px !important;
+
+  background: #151927 !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+
+  color: #dfe3f5 !important;
+
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.30) !important;
+}
+
+.soundButton:hover {
+  background: #1d2234 !important;
+}
+
+/* Stop button */
+.stopButton {
+  background:
+    linear-gradient(
+      180deg,
+      #171b2b,
+      #101321
+    ) !important;
+
+  border-color: rgba(255,255,255,.10) !important;
+  color: #c7ccdc !important;
+
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.30) !important;
+}
+
+.stopButton:hover {
+  background: #1d2234 !important;
+}
+
+/* Instruction */
+.instruction {
+  color: #858ca3 !important;
+}
+
+/* Guide */
+.guideButton {
+  background: #151927 !important;
+  border-color: rgba(132,120,255,.35) !important;
+  color: #a99fff !important;
+}
+
+.guideButton:hover {
+  background: #1d2034 !important;
+}
+
+/* Dark modal */
+.modal {
+  background:
+    linear-gradient(
+      145deg,
+      #181c2b,
+      #101321
+    ) !important;
+
+  border-color: rgba(255,255,255,.10) !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.60) !important;
+}
+
+.modal h2 {
+  color: #ffffff !important;
+}
+
+.modal p,
+.modal ul {
+  color: #aab0c2 !important;
+}
+
+.modalLabel {
+  color: #9b91ff !important;
+}
+
+.closeButton {
+  background: #24293a !important;
+  color: #dce1f0 !important;
+}
+
+.closeButton:hover {
+  background: #30364a !important;
+}
+
+.secondaryButton {
+  background: #1a1e2d !important;
+  border-color: rgba(255,255,255,.10) !important;
+  color: #dce1f0 !important;
+}
+
+.secondaryButton:hover {
+  background: #24293a !important;
+}
+
+/* Guide cards */
+.guideStep {
+  background:
+    linear-gradient(
+      145deg,
+      #1b1f30,
+      #131725
+    ) !important;
+
+  border-color: rgba(255,255,255,.08) !important;
+}
+
+.guideIcon {
+  background: #272344 !important;
+  color: #aaa1ff !important;
+}
+
+.guideStep strong {
+  color: #f4f6ff !important;
+}
+
+.guideStep div span {
+  color: #9299ad !important;
+}
+
+/* Level-up modal */
+.levelUpModal::before {
+  background:
+    radial-gradient(
+      circle,
+      rgba(124,112,255,.24),
+      rgba(124,112,255,0) 68%
+    ) !important;
+}
+
+.levelUpModal h2 {
+  color: #ffffff !important;
+}
+
+.levelProgress {
+  background: #272b3a !important;
+}
+
+.nextLevelText {
+  color: #a69dff !important;
+}
+
+/* Overlay */
+.overlay {
+  background: rgba(3,5,12,.78) !important;
+}
+
+/* Bottom navigation */
+.bottomNav {
+  background: rgba(10,12,20,.94) !important;
+  border-top-color: rgba(255,255,255,.08) !important;
+}
+
+.navItem {
+  color: #858ca3 !important;
+}
+
+.navItem:hover {
+  color: #a69dff !important;
+}
+
+/* =========================================================
+   RESPONSIVE FULLSCREEN
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .page {
+    padding: 10px 10px 18px !important;
+  }
+
+  .header {
+    grid-template-columns: 38px 1fr auto !important;
+  }
+
+  .backButton {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .hud {
+    width: 100% !important;
+    gap: 7px !important;
+  }
+
+  .hudCard {
+    padding: 9px 8px !important;
+  }
+
+  .canvas {
+    height: min(70dvh, 720px) !important;
+    max-width: 96vw !important;
+    max-height: 70dvh !important;
+    border-radius: 18px !important;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+
+  .page {
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+  }
+
+  .canvas {
+    height: min(67dvh, 620px) !important;
+    max-width: 97vw !important;
+    max-height: 67dvh !important;
+  }
+}
